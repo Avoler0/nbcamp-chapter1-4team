@@ -58,8 +58,6 @@ docs.forEach((doc) => {
   let blog = row.blog;
   let myself_intro = row.myself_intro;
   let temp_html = `
-  <div class="container-xl team_modal">
-  <section class="crac">
     <img
       src="${image}"
       alt=""
@@ -87,12 +85,12 @@ docs.forEach((doc) => {
         <br />
         <span class="intro_a">${blog}/span>
       </div>
-    </div>
+
   </section>
   <section class="myself_intro">
     <div class="myself_q">자기소개</div>
     <p class="myself_a">${myself_intro}</p>
   </section>
   `;
-  $(".team_modal").append(temp_html);
+  $(".crac").append(temp_html);
 });

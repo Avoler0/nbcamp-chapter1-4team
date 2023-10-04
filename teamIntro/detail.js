@@ -59,14 +59,15 @@ docs.forEach((doc) => {
   let hour = now.getHours();
   let minutes = now.getMinutes();
   let temp_html = `
-  $(.)
+  <section class="msg">
     <div class="result_msg">
       <span class="result_name">${name}</span>
       <span class="result_detail">${detail}</span>
       <span class="detail_time">${(year, month, day, hour, minutes)}</span>
     </div>
+    </section>
   `;
-  $(".cheerup_title").append(temp_html);
+  $(".msg").append(temp_html);
 });
 
 //현재 시간 구하기
