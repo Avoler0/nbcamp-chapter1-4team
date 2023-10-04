@@ -56,9 +56,6 @@
       }
     }
 
-    const makeMembersCard = () => {
-      
-    }
   await getMembers();
 
   $('#test').click(async ()=> {
@@ -70,7 +67,7 @@
       collaboStyle:'소통을 중요시 합니다.',
       blog:'http:localhost:5173',
       selfIntro:'안녕하세요 4조 팀장 정윤서입니다.',
-      good:0
+      good: +2
     }
 
     await addDoc(collection(db,"members"), doc);
@@ -88,17 +85,4 @@
     //   members.push({id,data})
     // }); 
     console.log('실행', tempMembers,members)
-  })
-  $('#test3').click(async () => {
-    console.log(tempMembers,members);
-    try{
-      let docs = await updateDoc(doc(db, "members", 'DukIKijuszU2aoDRaZhR'), {
-        good: +1
-      });
-      console.log(docs)
-    }catch(err){
-      console.log(err)
-    }finally{
-      console.log('end')
-    }
   })
