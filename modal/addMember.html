@@ -39,16 +39,17 @@
             let name = $('#name').val();
             let blog = $('#blog').val();
             let hobby = $('#hobby').val();
-            let style = $('#style').val();
-            let introduce = $('#introduce').val();
+            let collaboStyle = $('#collaboStyle').val();
+            let selfIntro = $('#selfIntro').val();
 
             let doc = {
                 'image': image,
                 'name': name,
                 'hobby': hobby,
                 'blog': blog,
-                'style': style,
-                'introduce': introduce
+                'collaboStyle': collaboStyle,
+                'selfIntro': selfIntro,
+                'good': 0,
             };
 
             if (image === '') {
@@ -66,9 +67,9 @@
                 $('#hobby').focus();
                 return
             }
-            if (style === '') {
+            if (collaboStyle === '') {
                 alert('협업 스타일을 입력해 주세요!')
-                $('#style').focus();
+                $('#collaboStyle').focus();
                 return
             }
             if (blog === '') {
@@ -76,9 +77,9 @@
                 $('#blog').focus();
                 return
             }
-            if (introduce === '') {
+            if (selfIntro === '') {
                 alert('자기 소개를 입력해 주세요!')
-                $('#introduce').focus();
+                $('#selfIntro').focus();
                 return
             }
 
@@ -118,16 +119,16 @@
                         <input type="text" class="form-control" id="hobby" placeholder="취미를 입력해 주세요.">
                     </div>
                     <div class="mb-3">
-                        <label for="style" class="form-label">협업 스타일</label>
-                        <input type="text" class="form-control" id="style" placeholder="협업 스타일을 간단히 입력해 주세요.">
+                        <label for="collaboStyle" class="form-label">협업 스타일</label>
+                        <input type="text" class="form-control" id="collaboStyle" placeholder="협업 스타일을 간단히 입력해 주세요.">
                     </div>
                     <div class="mb-3">
                         <label for="blog" class="form-label">블로그</label>
                         <input type="text" class="form-control" id="blog" placeholder="블로그 주소를 입력해 주세요.">
                     </div>
                     <div class="mb-3">
-                        <label for="introduce" class="form-label">자기 소개</label>
-                        <input type="text" class="form-control" id="introduce" placeholder="자기 소개를 입력해 주세요.">
+                        <label for="selfIntro" class="form-label">자기 소개</label>
+                        <input type="text" class="form-control" id="selfIntro" placeholder="자기 소개를 입력해 주세요.">
                     </div>
                 </div>
                 <div class="modal-footer">
