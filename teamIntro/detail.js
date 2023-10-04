@@ -47,52 +47,34 @@ const db = getFirestore(app);
 
 // 데이터 읽기 스켈레톤
 let docs = await getDocs(collection(db, "members"));
-// $(".crac").empty();
-// $(".myself_intro").empty();
+// $(".story").empty();
 docs.forEach((doc) => {
   let row = doc.data();
-  let image = row.image;
   let name = row.name;
-  let hobby = row.hobby;
-  let style = row.style;
-  let blog = row.blog;
-  let myself_intro = row.myself_intro;
+  let detail = row.detail;
+  let now = new Date();
+  let year = now.getFullYear();
+  let month = now.getMonth();
+  let day = now.getDay();
+  let hour = now.getHours();
+  let minutes = now.getMinutes();
   let temp_html = `
-  <div class="container-xl team_modal">
-  <section class="crac">
-    <img
-      src="${image}"
-      alt=""
-      srcset=""
-      class="person_img"
-    />
-    <div class="person_intro">
-      <div>
-        <span class="intro_q">이름</span>
-        <br />
-        <span class="intro_a">${name}</span>
-      </div>
-      <div>
-        <span class="intro_q">취미</span>
-        <br />
-        <span class="intro_a">${hobby}</span>
-      </div>
-      <div>
-        <span class="intro_q">협업 스타일</span>
-        <br />
-        <span class="intro_a">${style}</span>
-      </div>
-      <div>
-        <span class="intro_q">블로그</span>
-        <br />
-        <span class="intro_a">${blog}/span>
-      </div>
+  <section class="msg">
+    <div class="result_msg">
+      <span class="result_name">${name}</span>
+      <span class="result_detail">${detail}</span>
+      <span class="detail_time">${(year, month, day, hour, minutes)}</span>
     </div>
-  </section>
-  <section class="myself_intro">
-    <div class="myself_q">자기소개</div>
-    <p class="myself_a">${myself_intro}</p>
-  </section>
+    </section>
   `;
-  $(".team_modal").append(temp_html);
+  $(".msg").append(temp_html);
 });
+
+//현재 시간 구하기
+// let now = new Date();
+// let year = now.getFullYear();
+// let month = now.getMonth();
+// let day = now.getDay();
+// let hour = now.getHours();
+// let minutes = now.getMinutes();
+// console.log(year, month, day, hour, minutes);
