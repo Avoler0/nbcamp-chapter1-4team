@@ -28,16 +28,16 @@ $("#addMemberBtn").click(async function () {
   let name = $("#name").val();
   let blog = $("#blog").val();
   let hobby = $("#hobby").val();
-  let style = $("#style").val();
-  let introduce = $("#introduce").val();
+  let collaboStyle = $("#collaboStyle").val();
+  let selfIntro = $("#selfIntro").val();
 
   let doc = {
     image: image,
     name: name,
     hobby: hobby,
     blog: blog,
-    style: style,
-    introduce: introduce,
+    collaboStyle: collaboStyle,
+    selfIntro: selfIntro,
   };
 
   if (image === "") {
@@ -52,7 +52,7 @@ $("#addMemberBtn").click(async function () {
     alert("취미를 입력해 주세요!");
     return;
   }
-  if (style === "") {
+  if (collaboStyle === "") {
     alert("협업 스타일을 입력해 주세요!");
     return;
   }
@@ -60,7 +60,7 @@ $("#addMemberBtn").click(async function () {
     alert("블로그 주소를 입력해 주세요!");
     return;
   }
-  if (introduce === "") {
+  if (selfIntro === "") {
     alert("자기 소개를 입력해 주세요!");
     return;
   }
@@ -75,7 +75,7 @@ $("#addMemberBtn").click(async function () {
 
 // 데이터 읽기 스켈레톤
 let docs = await getDocs(collection(db, "members"));
-$(".crac").empty();
+$(".container").empty();
 $(".myself_intro").empty();
 $(".story").empty();
 docs.forEach((doc) => {
@@ -83,9 +83,9 @@ docs.forEach((doc) => {
   let image = row.image;
   let name = row.name;
   let hobby = row.hobby;
-  let style = row.style;
+  let collaboStyle = row.collaboStyle;
   let blog = row.blog;
-  let introduce = row.introduce;
+  let selfIntro = row.selfIntro;
   let detailName = row.detailName;
   let detail = row.detail;
   let now = new Date();
@@ -116,7 +116,7 @@ docs.forEach((doc) => {
       <div>
         <span class="intro_q">협업 스타일</span>
         <br />
-        <span class="intro_a">${style}</span>
+        <span class="intro_a">${collaboStyle}</span>
       </div>
       <div>
         <span class="intro_q">블로그</span>
@@ -126,16 +126,16 @@ docs.forEach((doc) => {
       </section>
   <section class="myself_intro">
     <div class="myself_q">자기소개</div>
-    <p class="myself_a">${introduce}</p>
+    <p class="myself_a">${selfIntro}</p>
   </section>
 
-  <section class="msg">
-    <div class="result_msg">
-      <span class="result_name">${detailName}</span>
-      <span class="result_detail">${detail}</span>
-      <span class="detail_time">${(year, month, day, hour, minutes)}</span>
-    </div>
-    </section>
   `;
   $(".container").append(temp_html);
+  // <section class="msg">
+  // <div class="result_msg">
+  //   <span class="result_name">${detailName}</span>
+  //   <span class="result_detail">${detail}</span>
+  //   <span class="detail_time">${(year, month, day, hour, minutes)}</span>
+  // </div>
+  // </section>
 });
