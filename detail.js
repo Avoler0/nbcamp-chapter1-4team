@@ -47,7 +47,7 @@ const db = getFirestore(app);
 
 // 데이터 읽기 스켈레톤
 let docs = await getDocs(collection(db, "members"));
-$(".story").empty();
+// $(".story").empty();
 docs.forEach((doc) => {
   let row = doc.data();
   let name = row.name;
