@@ -28,10 +28,12 @@
             appId: "1:903810170431:web:d06256df539d9edb0e828a",
             measurementId: "G-LBRL46HQYD"
         };
+
         // Firebase 인스턴스 초기화
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // 멤버 추가
         $("#addMemberBtn").click(async function () {
             let image = $('#image').val();
             let name = $('#name').val();
@@ -51,26 +53,32 @@
 
             if (image === '') {
                 alert('이미지 주소를 입력해 주세요!')
+                $('#image').focus();
                 return
             }
             if (name === '') {
                 alert('이름을 입력해 주세요!')
+                $('#name').focus();
                 return
             }
             if (hobby === '') {
                 alert('취미를 입력해 주세요!')
+                $('#hobby').focus();
                 return
             }
             if (style === '') {
                 alert('협업 스타일을 입력해 주세요!')
+                $('#style').focus();
                 return
             }
             if (blog === '') {
                 alert('블로그 주소를 입력해 주세요!')
+                $('#blog').focus();
                 return
             }
             if (introduce === '') {
                 alert('자기 소개를 입력해 주세요!')
+                $('#introduce').focus();
                 return
             }
 
