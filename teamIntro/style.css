@@ -160,6 +160,7 @@ body {
   }
   .msg {
     width: 400px;
+    height: auto;
   }
   .story {
     width: 300px;
