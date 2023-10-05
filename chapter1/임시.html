@@ -72,11 +72,12 @@
     margin: 0;
   }
 </style>
-
-<scipt type="module">
-
-</scipt>
-
+<script>
+  function play() {
+    var audio = document.getElementById("audio");
+    audio.play();
+  }
+</script>
 <body>
   <div class="team">
     <!-- 팀명 -->
@@ -87,7 +88,8 @@
     <!-- 팀 이미지 -->
     <img
       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT19vppnSx8TQbGZsMO8iEsBqUCKKAc2KIFSbd7MWFr_b-jfzAD0WqnaTonJ0JDl5oMrKc&usqp=CAU"
-      class="teamimg" alt="">
+      class="teamimg" alt="" value="PLAY" onclick="play()">
+    <audio id="audio" src="okay.mp3"></audio>
   </div>
 
   <div>
@@ -221,6 +223,7 @@
         memberId = doc.id
         firstMember = data;
       }
+      
       console.log('퍼스트멤버',firstMember,memberId)
       const html = `
         <li class="nav-item">
@@ -236,7 +239,10 @@
   getAllMember();
 
   let memberId;
-
+  let goodKingMember = {
+    name:'',
+    
+  };
   const memberCardInsert = (data) => {
     const { name, hobby, collaboStyle, image, good, blog, selfIntro } = data;
 
