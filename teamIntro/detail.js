@@ -47,34 +47,25 @@ const db = getFirestore(app);
 
 // 데이터 읽기 스켈레톤
 let docs = await getDocs(collection(db, "members"));
-// $(".story").empty();
+$(".story").empty();
 docs.forEach((doc) => {
   let row = doc.data();
-  let name = row.name;
+  let detailName = row.detailName;
   let detail = row.detail;
+  let good = row.good;
   let now = new Date();
   let year = now.getFullYear();
-  let month = now.getMonth();
+  let month = now.getMonth() + 1;
   let day = now.getDay();
   let hour = now.getHours();
   let minutes = now.getMinutes();
   let temp_html = `
-  <section class="msg">
     <div class="result_msg">
-      <span class="result_name">${name}</span>
+      <span class="result_name">${detailName}</span>
       <span class="result_detail">${detail}</span>
       <span class="detail_time">${(year, month, day, hour, minutes)}</span>
+      <span class="good">👍${good}</span>
     </div>
-    </section>
   `;
-  $(".msg").append(temp_html);
+  $(".story").append(temp_html);
 });
-
-//현재 시간 구하기
-// let now = new Date();
-// let year = now.getFullYear();
-// let month = now.getMonth();
-// let day = now.getDay();
-// let hour = now.getHours();
-// let minutes = now.getMinutes();
-// console.log(year, month, day, hour, minutes);

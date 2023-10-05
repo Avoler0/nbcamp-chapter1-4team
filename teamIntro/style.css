@@ -53,20 +53,17 @@ body {
   height: 50px;
 }
 
-.msg {
-  margin: 10px;
-}
-
 .cheerup_title {
   font-size: 30px;
-  padding: 10px 0px 10px 0px;
+  padding: 30px 30px 10px 40px;
   font-weight: bold;
 }
 
 .result_msg {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding-bottom: 5px;
   width: 450px;
 }
 
@@ -90,9 +87,25 @@ body {
 .story {
   background-color: rgb(243, 243, 243);
   border-radius: 10px;
-  width: 600px;
+  width: 450px;
   height: auto;
   margin: 50px 0px 50px 40px;
+}
+
+.msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(243, 243, 243);
+  width: 600px;
+  border-radius: 10px;
+  padding-bottom: 20px;
+  margin-left: 35px;
+}
+
+.good {
+  margin-left: auto;
 }
 
 /* .write {
@@ -136,15 +149,27 @@ body {
   .myself_intro {
     border: none;
   }
+  .myself_q {
+    font-size: 25px;
+  }
   .myself_a {
     width: 300px;
     height: auto;
     font-size: 12px;
   }
+  .msg {
+    width: 400px;
+  }
   .story {
     width: 300px;
   }
+  .good {
+    padding-bottom: 15px;
+    width: 50px;
+    font-size: 10px;
+  }
   .result_msg {
-    border: none;
+    border-bottom: 1px solid black;
+    width: 300px;
   }
 }

@@ -86,14 +86,6 @@ docs.forEach((doc) => {
   let collaboStyle = row.collaboStyle;
   let blog = row.blog;
   let selfIntro = row.selfIntro;
-  let detailName = row.detailName;
-  let detail = row.detail;
-  let now = new Date();
-  let year = now.getFullYear();
-  let month = now.getMonth() + 1;
-  let day = now.getDay();
-  let hour = now.getHours();
-  let minutes = now.getMinutes();
   let temp_html = `
   <section class="crac">
     <img
@@ -128,17 +120,11 @@ docs.forEach((doc) => {
     <div class="myself_q">자기소개</div>
     <p class="myself_a">${selfIntro}</p>
   </section>
+  <section class="msg">
+  <div class="cheerup_title">응원 메세지</div>
   <div class="story">
-        <section class="msg">
-          <div class="cheerup_title">응원 메세지</div>
-          <div class="result_msg">
-            <span class="result_name">김민재</span>
-            <span class="result_detail">응원 합니다.</span>
-            <span class="detail_time">2022.13.13 17:59</span>
-          </div>
-        </section>
-      </div>
-
+  </div>
+  </section>
   `;
   $(".container").append(temp_html);
 });
