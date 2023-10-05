@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyDspAV1LiugBcx69J0dWIk979EKColRCMY",
+            authDomain: "nbcamp4dollar.firebaseapp.com",
+            projectId: "nbcamp4dollar",
+            storageBucket: "nbcamp4dollar.appspot.com",
+            messagingSenderId: "903810170431",
+            appId: "1:903810170431:web:d06256df539d9edb0e828a",
+            measurementId: "G-LBRL46HQYD"
+        };
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // 멤버 추가
+        $("#addMemberBtn").click(async function () {
+            let image = $('#image').val();
+            let name = $('#name').val();
+            let blog = $('#blog').val();
+            let hobby = $('#hobby').val();
+            let collaboStyle = $('#collaboStyle').val();
+            let selfIntro = $('#selfIntro').val();
+
+            let doc = {
+                'image': image,
+                'name': name,
+                'hobby': hobby,
+                'blog': blog,
+                'collaboStyle': collaboStyle,
+                'selfIntro': selfIntro,
+                'good': 0,
+            };
+
+            if (image === '') {
+                alert('이미지 주소를 입력해 주세요!')
+                $('#image').focus();
+                return
+            }
+            if (name === '') {
+                alert('이름을 입력해 주세요!')
+                $('#name').focus();
+                return
+            }
+            if (hobby === '') {
+                alert('취미를 입력해 주세요!')
+                $('#hobby').focus();
+                return
+            }
+            if (collaboStyle === '') {
+                alert('협업 스타일을 입력해 주세요!')
+                $('#collaboStyle').focus();
+                return
+            }
+            if (blog === '') {
+                alert('블로그 주소를 입력해 주세요!')
+                $('#blog').focus();
+                return
+            }
+            if (selfIntro === '') {
+                alert('자기 소개를 입력해 주세요!')
+                $('#selfIntro').focus();
+                return
+            }
+
+            await addDoc(collection(db, "members"), doc);
+            alert('등록 완료!');
+            $('#addMemberBtn').modal('hide');
+
+            //새로고침
+            window.location.reload();
+        })
+    </script>
+</head>
+
+<body>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+        멤버 추가 +
+    </button>
+    <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">멤버 추가</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="image" class="form-label h6">이미지</label>
+                        <input type="text" class="form-control" id="image" placeholder="이미지 주소를 입력해 주세요.">
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">이름</label>
+                        <input type="text" class="form-control" id="name" placeholder="이름을 입력해 주세요.">
+                    </div>
+                    <div class="mb-3">
+                        <label for="hobby" class="form-label">취미</label>
+                        <input type="text" class="form-control" id="hobby" placeholder="취미를 입력해 주세요.">
+                    </div>
+                    <div class="mb-3">
+                        <label for="collaboStyle" class="form-label">협업 스타일</label>
+                        <input type="text" class="form-control" id="collaboStyle" placeholder="협업 스타일을 간단히 입력해 주세요.">
+                    </div>
+                    <div class="mb-3">
+                        <label for="blog" class="form-label">블로그</label>
+                        <input type="text" class="form-control" id="blog" placeholder="블로그 주소를 입력해 주세요.">
+                    </div>
+                    <div class="mb-3">
+                        <label for="selfIntro" class="form-label">자기 소개</label>
+                        <input type="text" class="form-control" id="selfIntro" placeholder="자기 소개를 입력해 주세요.">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" id="addMemberBtn">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

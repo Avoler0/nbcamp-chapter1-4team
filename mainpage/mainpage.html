@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4달라 팀 소개</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Nanum+Myeongjo:wght@800&family=Song+Myung&display=swap');
+
+    .team {
+        width: 300px;
+        margin: 20px auto 0px auto;
+
+    }
+
+    .teamimg {
+        padding-top: 15px;
+        padding-bottom: 20px;
+    }
+    .nav{
+        display: flex; 
+        flex-direction: row;
+        width: 100%;
+        margin: 0 auto 0 auto; 
+        padding: 0; 
+        background-color: rgb(196, 203, 218);
+        list-style-type: none; /* 목록 기호 제거 */
+    }
+
+
+</style>
+
+<body>
+    <div class="team">
+        <!-- 팀명 -->
+        <h1 style="text-align: center; font-family: 'Song Myung', serif; font-size: 400%;">
+            4달라
+        </h1>
+
+        <!-- 팀 이미지 -->
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT19vppnSx8TQbGZsMO8iEsBqUCKKAc2KIFSbd7MWFr_b-jfzAD0WqnaTonJ0JDl5oMrKc&usqp=CAU"
+            class="teamimg" alt="">
+    </div>
+
+    <div>
+        <!-- 팀 소개 -->
+        <p style="text-align: center;padding-bottom: 30px;">
+            내일배움캠프 팀 '4달라' 입니다. 열심히 하겠습니다 ❣️
+        </p>
+    </div>
+
+    <!-- 팀원 소개 네비게이션 바 -->
+    <nav>
+        <ul class="nav">
+        <li><span href="">김민재</span></li>
+        <li><span href="">손민영</span></li>
+        <li><span href="">임재진</span></li>
+        <li><span href="">정윤서</span></li>
+        <li><span href="">지다혜</span></li>
+        </ul>
+    </nav>
+    <div id="card">
+
+    </div>
+
+</body>
+<script>
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { doc, collection, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+<<<<<<< HEAD
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDspAV1LiugBcx69J0dWIk979EKColRCMY",
+      authDomain: "nbcamp4dollar.firebaseapp.com",
+      projectId: "nbcamp4dollar",
+      storageBucket: "nbcamp4dollar.appspot.com",
+      messagingSenderId: "903810170431",
+      appId: "1:903810170431:web:d06256df539d9edb0e828a",
+      measurementId: "G-LBRL46HQYD"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    
+    function openclose(){
+        $('').toggle();
+    }
+
+$('.nav').children('li').find('span').click(function(element){
+    console.log(element.target.innerText)   
+})
+
+</script>
+=======
+>>>>>>> a633bcd3c91f3f9be71559f384c2c1d4388dd30e
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDspAV1LiugBcx69J0dWIk979EKColRCMY",
+      authDomain: "nbcamp4dollar.firebaseapp.com",
+      projectId: "nbcamp4dollar",
+      storageBucket: "nbcamp4dollar.appspot.com",
+      messagingSenderId: "903810170431",
+      appId: "1:903810170431:web:d06256df539d9edb0e828a",
+      measurementId: "G-LBRL46HQYD"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    
+    function openclose(){
+        $('').toggle();
+    }
+
+$('.nav').children('li').find('span').click(function(element){
+    console.log(element.target.innerText)   
+})
+
+</script>
+
+</html>
