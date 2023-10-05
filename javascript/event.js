@@ -63,11 +63,11 @@ $("#addMemberBtn").click(async function () { // 멤버 추가
   window.location.reload();
 });
 
-$("#navbar").on("click", null, async (element) => {
+$("nav #navbar").on("click", "#memberNavBtn", async (element) => {
   // 네비게이션 이름 클릭
-  const dataMemberId = element.target.getAttribute("data-member-id");
-  const selectUserData = await navSelectMember(element.target.innerText);
-
+  const dataMemberId = element.currentTarget.getAttribute("data-member-id");
+  const selectUserData = await navSelectMember(element.currentTarget.innerText);
+  console.log(dataMemberId)
   memberCardInsert(selectUserData, dataMemberId);
 });
 
