@@ -1,0 +1,179 @@
+body {
+  margin: 0;
+  background-color: #ede9e9;
+}
+
+#card {
+  width: 100%;
+  padding: 15px;
+}
+
+.crac {
+  position: relative;
+  display: flex;
+  padding-bottom: 20px;
+  border-bottom: 1px solid black;
+}
+
+.person_img {
+  width: 250px;
+  height: 200px;
+  border-radius: 20px;
+}
+
+.person_intro {
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+.intro_q {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.intro_a {
+  font-size: 13px;
+  padding-left: 5px;
+  white-space: pre-line;
+  height: auto;
+  font-weight: lighter;
+}
+
+.myself_intro {
+
+}
+
+.myself_q {
+  margin-top: 15px;
+  padding-bottom: 20px;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.myself_a {
+  background-color: rgb(243, 243, 243);
+  border-radius: 8px;
+  height: 50px;
+}
+
+.msg {
+  margin: 0px;
+  padding: 10px;
+}
+
+.cheerup_title {
+  font-size: 24px;
+  padding: 10px 0px 10px 0px;
+  font-weight: 600;
+}
+
+.result_msg {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ede9e9;
+  background-color: #edebeb;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px 5px;
+  border-radius: 15px;
+}
+
+.result_name {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.result_detail {
+  font-size: 14px;
+  padding: 5px 0px 5px 0px;
+  font-weight: 300;
+  height: auto;
+}
+
+.detail_time {
+  font-size: 11px;
+  color: grey;
+}
+
+.good {
+  margin-right: 15px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid black;
+  padding: 5px 8px;
+  border-radius: 15px;
+  background-color: #edebeb;
+}
+
+.good button{
+  background-color: transparent;
+  border: 0;
+}
+
+.story {
+  background-color: rgb(243, 243, 243);
+  border-radius: 10px;
+  height: auto;
+}
+
+#commentForm{
+  margin-top: 15px;
+}
+#commentField{
+}
+
+#input{
+  display: flex;
+  flex-direction: column;
+}
+
+#input #commentName{
+  width: 15%;
+  outline: none;
+  padding: 0 5px;
+}
+
+#input #commentText{
+  flex-grow: 1;
+  resize: none;
+  outline: none;
+  padding: 0 5px;
+  margin: 0;
+}
+.textdiv{
+  display: flex;
+  height: 50px;
+  margin-top: 5px;
+  position: relative;
+}
+#commentBtn{
+  height: 100%;
+  border: 1px solid rgb(189, 181, 181);
+}
+
+@media (max-width: 500px) {
+  .crac {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+  .person_intro {
+    margin: 10px 0px 0px 30px;
+    padding: 15px;
+  }
+  .myself_intro {
+    border: none;
+  }
+  .myself_a {
+    width: 300px;
+    height: auto;
+    font-size: 12px;
+  }
+  .story {
+    width: 300px;
+  }
+  .result_msg {
+    border: none;
+  }
+}
