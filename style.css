@@ -139,6 +139,13 @@ body {
   margin-top: 5px;
   position: relative;
 }
+<<<<<<< HEAD
+=======
+#commentBtn {
+  height: 100%;
+  border: 1px solid rgb(189, 181, 181);
+}
+>>>>>>> 2069227b5a04876b7b45978f0272c728af145642
 
 #commentBtn:hover {
   background-color: rgba(97, 176, 245, 0.11);
@@ -162,10 +169,13 @@ body {
   box-shadow: 0 0 20px rgba(97, 176, 245, 0.52);
   border-radius: 30px;
 }
+<<<<<<< HEAD
 #commentBtn {
   height: 100%;
   border: 1px solid rgb(189, 181, 181);
 }
+=======
+>>>>>>> 2069227b5a04876b7b45978f0272c728af145642
 
 @media (max-width: 500px) {
   .crac {
