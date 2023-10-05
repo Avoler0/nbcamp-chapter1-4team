@@ -29,6 +29,7 @@ body {
 .intro_q {
   font-size: 18px;
   font-weight: bold;
+  margin-bottom:0;
 }
 
 .intro_a {
@@ -36,6 +37,7 @@ body {
   white-space: pre-line;
   height: auto;
   font-weight: lighter;
+  margin-bottom:0.3rem;
 }
 
 .myself_intro {
@@ -44,15 +46,16 @@ body {
 
 .myself_q {
   margin-top: 15px;
-  padding-bottom: 20px;
+  padding-left:10px;
+  padding-bottom: 5px;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .myself_a {
   background-color: rgb(243, 243, 243);
   border-radius: 8px;
-  height: 50px;
+  padding:20px;
 }
 
 .msg {
@@ -61,7 +64,7 @@ body {
 }
 
 .cheerup_title {
-  font-size: 24px;
+  font-size: 20px;
   padding: 10px 0px 10px 0px;
   font-weight: 600;
 }

@@ -27,7 +27,6 @@
 
   .teamimg {
     padding-top: 15px;
-    padding-bottom: 20px;
   }
 
   #memberSection {
@@ -59,18 +58,21 @@
     font-size: 16px;
     height: 100%;
   }
-  .nav-item p{
+
+  .nav-item p {
     position: relative;
     padding-right: 15px;
   }
-  .goodman{
+
+  .goodman {
     top: 0;
     left: 0;
     position: absolute;
-    transform: translate(-13px,-11px) rotate(-20deg);
+    transform: translate(-13px, -11px) rotate(-20deg);
     font-size: 12px;
     color: black;
   }
+
   #memberCard {
     padding: 15px 0;
     margin: 15px 0 40px;
@@ -89,6 +91,7 @@
     audio.play();
   }
 </script>
+
 <body>
   <div class="team">
     <!-- 팀명 -->
@@ -101,6 +104,7 @@
       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT19vppnSx8TQbGZsMO8iEsBqUCKKAc2KIFSbd7MWFr_b-jfzAD0WqnaTonJ0JDl5oMrKc&usqp=CAU"
       class="teamimg" alt="" value="PLAY" onclick="play()">
     <audio id="audio" src="okay.mp3"></audio>
+    <p style="font-size:14px; text-align:center;">이미지를 클릭해 주세요!</p>
   </div>
 
   <div>
@@ -226,7 +230,7 @@
   const getAllMember = async () => {
     let firstMember = '';
     let docs = await getDocs(collection(db, "members"));
-    console.log('겟 올 멤버',memberId)
+    console.log('겟 올 멤버', memberId)
     docs.forEach((doc) => {
       const data = doc.data();
       if (data.good >= goodKingMember.good) {
@@ -237,9 +241,9 @@
     });
 
     docs.forEach((doc) => {
-      
+
       const data = doc.data();
-      if (firstMember === ''){
+      if (firstMember === '') {
         memberId = doc.id
         firstMember = data;
       }
@@ -255,13 +259,19 @@
       memberCardInsert(firstMember);
       $('#navbar').append(html)
     });
+    $('nav .nav-item:first-child').addClass('_on');
+
+    $('nav .nav-item p').on('click', function () {
+      $('nav .nav-item').removeClass('_on');
+      $(this).closest('.nav-item').addClass('_on');
+    });
   }
   getAllMember();
 
   let memberId;
   let goodKingMember = {
-    name:'',
-    good:0
+    name: '',
+    good: 0
   };
   const memberCardInsert = (data) => {
     const { name, hobby, collaboStyle, image, good, blog, selfIntro } = data;
@@ -277,24 +287,20 @@
         />
         <div class="person_intro">
           <div>
-            <span class="intro_q">이름</span>
-            <br />
-            <span class="intro_a">${name}</span>
+            <p class="intro_q">이름</p>
+            <p class="intro_a">${name}</p>
           </div>
           <div>
-            <span class="intro_q">취미</span>
-            <br />
-            <span class="intro_a">${hobby}</span>
+            <p class="intro_q">취미</p>
+            <p class="intro_a">${hobby}</p>
           </div>
           <div>
-            <span class="intro_q">협업 스타일</span>
-            <br />
-            <span class="intro_a">${collaboStyle}</span>
+            <p class="intro_q">협업 스타일</p>
+            <p class="intro_a">${collaboStyle}</p>
           </div>
           <div>
-            <span class="intro_q">블로그</span>
-            <br />
-            <span class="intro_a"><a href="${blog}" target="_blank">${blog}</a></span>
+            <p class="intro_q">블로그</p>
+            <p class="intro_a"><a href="${blog}" target="_blank">${blog}</a></p>
           </div>
           <div class="good">
             <button id="goodBtn" class="btn btn-outline-dark">👍${good === undefined ? 0 : good}</button>  
