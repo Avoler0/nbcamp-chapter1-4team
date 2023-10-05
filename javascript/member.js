@@ -37,25 +37,28 @@ const navItemInit = async () => {
         goodKingMember.good = data.good;
       }
       const html = `
-        <li class="nav-item">
-          <button type="button" id="memberNavBtn" data-member-id="${doc.id}" class="btn btn-outline-primary">
-            <p type="button" id="memberNavBtn" data-member-id="${doc.id}">
-              <span>${data.name}</span>
-              ${goodKingMember.name === data.name ? '<span class="goodman">인기👑</span>' : ''}
-            </p>
-          </button>
-        </li>
+      <li class="nav-item">
+        <p type="button" id="memberNavBtn" data-member-id="${doc.id}">
+          <span>${data.name} </span>
+          ${
+            goodKingMember.name === data.name
+              ? '<span class="goodman">인기👑</span>'
+              : ""
+          }
+        </p>
+      </li>
       `;
       memberCardInsert(firstMember, firstId);
 
       $("#navbar").append(html);
     });
 
-    let memberAddHtml = `
-          <li class="nav-item">
-          </li>
-        `;
-    $("#navbar").append(memberAddHtml);
+    $("nav .nav-item:first-child").addClass("_on");
+
+    $("nav .nav-item p").on("click", function () {
+      $("nav .nav-item").removeClass("_on");
+      $(this).closest(".nav-item").addClass("_on");
+    });
   };
   navItemInit();
 
