@@ -82,6 +82,7 @@ docs.forEach((doc) => {
   let row = doc.data();
   let image = row.image;
   let name = row.name;
+  let good = row.good;
   let hobby = row.hobby;
   let collaboStyle = row.collaboStyle;
   let blog = row.blog;
@@ -97,6 +98,7 @@ docs.forEach((doc) => {
     <div class="person_intro">
       <div>
         <span class="intro_q">이름</span>
+        <span class="good">👍${good}</span>
         <br />
         <span class="intro_a">${name}</span>
       </div>
