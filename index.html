@@ -13,10 +13,13 @@
     <script src="detail.js" defer type="module"></script>
     <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://use.fontawesome.com/5c26147856.js"></script>
   </head>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Nanum+Myeongjo:wght@800&family=Song+Myung&display=swap");
+
+    body {
+      font-family: "Song Myung", serif;
+    }
 
     .team {
       width: 300px;
@@ -34,11 +37,20 @@
     }
 
     nav {
-      border: 1px solid gray;
+      border: 0;
+      padding: 6px 12px !important;
+      border-radius: 10px;
+      box-shadow: 4px 4px 0 0 #ddd;
     }
 
     nav li {
-      padding: 6px 12px;
+      color: #bbb;
+      padding: 5px 10px;
+    }
+
+    nav li._on {
+      font-weight: bold;
+      color: #000;
     }
 
     nav li span {
@@ -48,20 +60,36 @@
       font-size: 16px;
       height: 100%;
     }
-
+    .nav-item p {
+      position: relative;
+      padding-right: 15px;
+    }
+    .goodman {
+      top: 0;
+      left: 0;
+      position: absolute;
+      transform: translate(-13px, -11px) rotate(-20deg);
+      font-size: 12px;
+      color: black;
+    }
     #memberCard {
       padding: 15px 0;
-      margin-top: 15px;
+      margin: 15px 0 40px;
       background-color: #fff;
+      box-shadow: 4px 4px 0 0 #ddd;
+      border-radius: 10px;
     }
 
-    nav button {
-      margin-right: 12px;
+    #memberNavBtn {
+      margin: 0;
     }
   </style>
-
-  <scipt type="module"> </scipt>
-
+  <script>
+    function play() {
+      var audio = document.getElementById("audio");
+      audio.play();
+    }
+  </script>
   <body>
     <div class="team">
       <!-- 팀명 -->
@@ -76,11 +104,19 @@
       </h1>
 
       <!-- 팀 이미지 -->
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT19vppnSx8TQbGZsMO8iEsBqUCKKAc2KIFSbd7MWFr_b-jfzAD0WqnaTonJ0JDl5oMrKc&usqp=CAU"
+        class="teamimg"
+        alt=""
+        value="PLAY"
+        onclick="play()"
+      />
+      <audio id="audio" src="okay.mp3"></audio>
     </div>
 
     <div>
       <!-- 팀 소개 -->
-      <p style="text-align: center; padding-bottom: 30px">
+      <p style="text-align: center; padding-bottom: 30px; font-size: 22px">
         내일배움캠프 팀 '4달라' 입니다. 열심히 하겠습니다 ❣️
       </p>
     </div>
@@ -91,7 +127,7 @@
         <ul id="navbar" class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
         <button
           type="button"
-          class="btn btn-primary"
+          class="btn btn-outline-dark"
           data-bs-toggle="modal"
           data-bs-target="#addMemberModal"
         >
@@ -231,7 +267,7 @@
 
       return data;
     };
-    const getComment = async (memberId) => {
+    const getComment = async () => {
       console.log("겟 코멘트");
       const q = query(
         collection(db, "comments"),
@@ -251,11 +287,11 @@
 
       sort.forEach((doc) => {
         let temp_html = `
-              <div class="result_msg">
-                <span class="result_name">${doc.commentName}</span>
-                <span class="result_detail">${doc.commentText}</span>
-              </div>
-            `;
+          <div class="result_msg">
+            <span class="result_name">${doc.commentName}</span>
+            <span class="result_detail">${doc.commentText}</span>
+          </div>
+        `;
         html += temp_html;
       });
       $("#commentField").html("");
@@ -264,96 +300,116 @@
     const getAllMember = async () => {
       let firstMember = "";
       let docs = await getDocs(collection(db, "members"));
-      console.log(docs.length);
+      console.log("겟 올 멤버", memberId);
       docs.forEach((doc) => {
-        console.log(doc);
         const data = doc.data();
-        if (firstMember === "") firstMember = data;
-        const html = `
-            <li class="nav-item">
-              <button type="button" id="memberNavBtn" data-member-id="${doc.id}" class="btn btn-outline-primary">
-                ${data.name}
-              </button>
-            </li>
-          `;
-        memberCardInsert(firstMember, doc.id);
-        $("#navbar").append(html);
+        if (data.good >= goodKingMember.good) {
+          goodKingMember.id = doc.id;
+          goodKingMember.name = data.name;
+          goodKingMember.good = data.good;
+        }
       });
 
-      let memberAddHtml = `
-          <li class="nav-item">
-          </li>
-        `;
-      $("#navbar").append(memberAddHtml);
+      docs.forEach((doc) => {
+        const data = doc.data();
+        if (firstMember === "") {
+          memberId = doc.id;
+          firstMember = data;
+        }
+
+        const html = `
+        <li class="nav-item">
+          <p type="button" id="memberNavBtn" data-member-id="${doc.id}">
+            <span>${data.name} </span>
+            ${
+              goodKingMember.name === data.name
+                ? '<span class="goodman">인기👑</span>'
+                : ""
+            }
+          </p>
+        </li>
+      `;
+        memberCardInsert(firstMember);
+        $("#navbar").append(html);
+      });
     };
     getAllMember();
 
     let memberId;
-
-    const memberCardInsert = (data, id) => {
+    let goodKingMember = {
+      name: "",
+      good: 0,
+    };
+    const memberCardInsert = (data) => {
       const { name, hobby, collaboStyle, image, good, blog, selfIntro } = data;
-      memberId = id;
+
       const cardHtml = `
-          <div id="card">
-            <section class="crac">
-            <img
-              src="${image}"
-              alt=""
-              srcset=""
-              class="person_img"
-            />
-            <div class="person_intro">
-              <div>
-                <span class="intro_q">이름</span>
-                <br />
-                <span class="intro_a">${name}</span>
-              </div>
-              <div>
-                <span class="intro_q">취미</span>
-                <br />
-                <span class="intro_a">${hobby}</span>
-              </div>
-              <div>
-                <span class="intro_q">협업 스타일</span>
-                <br />
-                <span class="intro_a">${collaboStyle}</span>
-              </div>
-              <div>
-                <span class="intro_q">블로그</span>
-                <br />
-                <span class="intro_a"><a href="${blog}" target="_blank">${blog}</a></span>
-              </div>
-              <div class="good">
-                <button id="goodBtn">👍${good === undefined ? 0 : good}</button>
-              </div>
-            </section>
-            <section class="myself_intro">
-              <div class="myself_q">자기소개</div>
-              <p class="myself_a">${selfIntro}</p>
-            </section>
-            <div class="story">
-            <section class="msg">
-
-              <div class="cheerup_title">응원 메세지<button class="commentHideBtn"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg></button></div>
-              <div id="commentField">
-              </div>
-              <div id="commentForm">
-                <div id="input">
-                  <input type="text" id="commentName" placeholder="이름" />
-                  <div class="textdiv">
-                    <textarea id="commentText" placeholder="댓글 내용"/>
-                    <button id="commentBtn">등록</button>
-                  </div>
-                </div>
-
-              </div>
-          </section>
-        </div>
+      <div id="card">
+        <section class="crac">
+        <img
+          src="${image}"
+          alt=""
+          srcset=""
+          class="person_img"
+        />
+        <div class="person_intro">
+          <div>
+            <span class="intro_q">이름</span>
+            <br />
+            <span class="intro_a">${name}</span>
           </div>
-          `;
-      getComment(id);
+          <div>
+            <span class="intro_q">취미</span>
+            <br />
+            <span class="intro_a">${hobby}</span>
+          </div>
+          <div>
+            <span class="intro_q">협업 스타일</span>
+            <br />
+            <span class="intro_a">${collaboStyle}</span>
+          </div>
+          <div>
+            <span class="intro_q">블로그</span>
+            <br />
+            <span class="intro_a"><a href="${blog}" target="_blank">${blog}</a></span>
+          </div>
+          <div class="good">
+            <button id="goodBtn" class="btn btn-outline-dark">👍${
+              good === undefined ? 0 : good
+            }</button>  
+          </div>
+        </section>
+        <section class="myself_intro">
+          <div class="myself_q">자기소개</div>
+          <p class="myself_a">${selfIntro}</p>
+        </section>
+        <div class="story">
+        <section class="msg">
+          <div class="cheerup_title">응원 메세지 <button class="commentHideBtn"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg></button></div>
+          <div id="commentField">
+          </div>
+          <div id="commentForm">
+            <div id="input">
+              <input type="text" id="commentName" placeholder="이름" />
+              <div class="textdiv">
+                <textarea id="commentText" placeholder="댓글 내용"/>
+                <button id="commentBtn">등록</button>
+              </div>
+            </div>
+            
+          </div>
+      </section>
+    </div>
+      </div>
+      `;
+      getComment();
       $("#memberCard").children().remove();
       $("#memberCard").append(cardHtml);
+
+      $("nav .nav-item p").on("click", function () {
+        $("nav .nav-item").removeClass("_on");
+        $(this).closest(".nav-item").addClass("_on");
+      });
     };
 
     $("#navbar").on("click", ".nav-item #memberNavBtn", async (element) => {
@@ -362,7 +418,7 @@
 
       const data = await getMember(element.target.innerText);
 
-      memberCardInsert(data, memberId);
+      memberCardInsert(data);
     });
 
     $("#memberCard").on("click", "#commentForm button", async () => {
@@ -378,7 +434,7 @@
       try {
         const result = await addDoc(collection(db, "comments"), data);
 
-        await getComment(memberId);
+        await getComment();
       } catch (err) {
         console.log("댓글 추가 에러", err);
       }
@@ -386,6 +442,10 @@
 
     $("#memberCard").on("click", ".good #goodBtn", async () => {
       // 좋아요 클릭
+      const goodTrue = window.localStorage.getItem("good");
+
+      if (goodTrue) return alert("이미 좋아요를 누르셨습니다.");
+
       try {
         const memberData = await getDoc(doc(db, "members", memberId));
         const { good } = memberData.data();
@@ -393,13 +453,74 @@
         await updateDoc(doc(db, "members", memberId), {
           good: good + 1,
         });
+
+        window.localStorage.setItem("good", true);
+
         const goodPlus = good + 1;
+
         $("#goodBtn").html(`👍${goodPlus}`);
       } catch (err) {
         console.log(err);
       } finally {
         console.log("end");
       }
+    });
+
+    $("#addMemberBtn").click(async function () {
+      let image = $("#image").val();
+      let name = $("#name").val();
+      let blog = $("#blog").val();
+      let hobby = $("#hobby").val();
+      let collaboStyle = $("#collaboStyle").val();
+      let selfIntro = $("#selfIntro").val();
+
+      let doc = {
+        image: image,
+        name: name,
+        hobby: hobby,
+        blog: blog,
+        collaboStyle: collaboStyle,
+        selfIntro: selfIntro,
+        good: 0,
+      };
+
+      if (image === "") {
+        alert("이미지 주소를 입력해 주세요!");
+        $("#image").focus();
+        return;
+      }
+      if (name === "") {
+        alert("이름을 입력해 주세요!");
+        $("#name").focus();
+        return;
+      }
+      if (hobby === "") {
+        alert("취미를 입력해 주세요!");
+        $("#hobby").focus();
+        return;
+      }
+      if (collaboStyle === "") {
+        alert("협업 스타일을 입력해 주세요!");
+        $("#collaboStyle").focus();
+        return;
+      }
+      if (blog === "") {
+        alert("블로그 주소를 입력해 주세요!");
+        $("#blog").focus();
+        return;
+      }
+      if (selfIntro === "") {
+        alert("자기 소개를 입력해 주세요!");
+        $("#selfIntro").focus();
+        return;
+      }
+
+      await addDoc(collection(db, "members"), doc);
+      alert("등록 완료!");
+      $("#addMemberBtn").modal("hide");
+
+      //새로고침
+      window.location.reload();
     });
 
     $(document).on("click", ".commentHideBtn", function () {
