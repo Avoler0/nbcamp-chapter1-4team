@@ -4,7 +4,7 @@ export const memberCard = (data,id) => {
   const { name, hobby, collaboStyle, image, good, blog, selfIntro } = data;
 
   const cardHtml = `
-          <div id="card" data-member-id="${id}">
+            <div id="card">
             <section class="crac">
             <img
               src="${image}"
@@ -14,27 +14,27 @@ export const memberCard = (data,id) => {
             />
             <div class="person_intro">
               <div>
-                <span class="intro_q">이름</span>
-                <br />
-                <span class="intro_a">${name}</span>
+                <p class="intro_q">이름</p>
+                <p class="intro_a">${name}</p>
               </div>
               <div>
-                <span class="intro_q">취미</span>
-                <br />
-                <span class="intro_a">${hobby}</span>
+                <p class="intro_q">취미</p>
+                <p class="intro_a">${hobby}</p>
               </div>
               <div>
-                <span class="intro_q">협업 스타일</span>
-                <br />
-                <span class="intro_a">${collaboStyle}</span>
+                <p class="intro_q">협업 스타일</p>
+                <p class="intro_a">${collaboStyle}</p>
               </div>
               <div>
-                <span class="intro_q">블로그</span>
-                <br />
-                <span class="intro_a"><a href="${blog}" target="_blank">${blog}</a></span>
+                <p class="intro_q">블로그</p>
+                <p class="intro_a"><a href="${blog}" target="_blank">${blog}</a></p>
               </div>
               <div class="good">
-                <button id="goodBtn">👍${good === undefined ? 0 : good}</button>
+
+                <button id="goodBtn" class="btn btn-outline-dark">👍${
+                  good === undefined ? 0 : good
+                }</button>  
+                <button id="goodBtn" class="btn btn-outline-dark">👍${good === undefined ? 0 : good}</button>  
               </div>
             </section>
             <section class="myself_intro">
@@ -43,8 +43,7 @@ export const memberCard = (data,id) => {
             </section>
             <div class="story">
             <section class="msg">
-
-              <div class="cheerup_title">응원 메세지<button class="commentHideBtn"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg></button></div>
+              <div class="cheerup_title">응원 메세지</div>
               <div id="commentField">
               </div>
               <div id="commentForm">
@@ -52,13 +51,13 @@ export const memberCard = (data,id) => {
                   <input type="text" id="commentName" placeholder="이름" />
                   <div class="textdiv">
                     <textarea id="commentText" placeholder="댓글 내용"/>
-                    <button id="commentBtn">등록</button>
+                    <button id="commentBtn" class="btn btn-outline-dark">등록</button>
                   </div>
                 </div>
-
+                
               </div>
           </section>
-        </div>
+          </div>
           </div>
           `;
 
