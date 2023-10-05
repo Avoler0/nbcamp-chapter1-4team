@@ -66,7 +66,7 @@ $("#addMemberBtn").click(async function () { // 멤버 추가
 $("nav #navbar").on("click", "#memberNavBtn", async (element) => {
   // 네비게이션 이름 클릭
   const dataMemberId = element.currentTarget.getAttribute("data-member-id");
-  const selectUserData = await navSelectMember(element.currentTarget.innerText);
+  const selectUserData = await navSelectMember(element.target.innerText);
   console.log(dataMemberId)
   memberCardInsert(selectUserData, dataMemberId);
 });
@@ -80,6 +80,7 @@ $("#memberCard").on("click", "#commentForm button", async () => {
       commentText: $("#commentText").val(),
       date: new Date().getTime(),
     };
+
     console.log(data);
     try {
       await addDoc(collection(db, "comments"), data);
@@ -97,7 +98,7 @@ $("#memberCard").on("click", "#commentForm button", async () => {
     // 좋아요 클릭
     const dataMemberId = $('#card').data('member-id');
     const goodSwitch = window.localStorage.getItem('good');
-
+    
     if(goodSwitch) return alert('이미 좋아요를 누르셨습니다.');
 
     try {
@@ -109,6 +110,7 @@ $("#memberCard").on("click", "#commentForm button", async () => {
       });
       const goodPlus = good + 1;
       $("#goodBtn").html(`👍${goodPlus}`);
+      
       window.localStorage.setItem('good',true);
     } catch (err) {
       console.log(err);

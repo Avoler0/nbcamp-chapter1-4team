@@ -2,9 +2,9 @@
 
 export const memberCard = (data,id) => {
   const { name, hobby, collaboStyle, image, good, blog, selfIntro } = data;
-
+  console.log('데이터',data);
   const cardHtml = `
-            <div id="card">
+            <div id="card" data-member-id="${id}">
             <section class="crac">
             <img
               src="${image}"
