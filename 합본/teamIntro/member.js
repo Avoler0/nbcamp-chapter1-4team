@@ -48,7 +48,6 @@ docs.forEach((doc) => {
     <div class="person_intro">
       <div>
         <span class="intro_q">이름</span>
-        <span class="good">👍${good}</span>
         <br />
         <span class="intro_a">${name}</span>
       </div>
@@ -67,6 +66,7 @@ docs.forEach((doc) => {
         <br />
         <span class="intro_a"><a href="#">${blog}</a></span>
       </div>
+      <span class="good">👍${good}</span>
       </section>
   <section class="myself_intro">
     <div class="myself_q">자기소개</div>
