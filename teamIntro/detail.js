@@ -47,16 +47,16 @@ const db = getFirestore(app);
 
 // 데이터 읽기 스켈레톤
 // member.js의 응원메세지 틀에 응원메세지 목록
-let docs = await getDocs(collection(db, "members"));
+let docs = await getDocs(collection(db, "comments"));
 $(".story").empty();
 docs.forEach((doc) => {
   let row = doc.data();
-  let detailName = row.detailName;
-  let detail = row.detail;
+  let commentName = row.commentName;
+  let commentText = row.commentText;
   let temp_html = `
     <div class="result_msg">
-      <span class="result_name">${detailName}</span>
-      <span class="result_detail">${detail}</span>
+      <span class="result_name">${commentName}</span>
+      <span class="result_detail">${commentText}</span>
     </div>
   `;
   $(".story").append(temp_html);
