@@ -23,41 +23,79 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // // 데이터 추가 스켈레톤
-// $("#movie_confirm").click(async function () {
-//   let imageUrl = document.querySelectorAll("#floatingTextarea")[0].value;
-//   let star = document.getElementById("star").value;
-//   let movieTtile = document.querySelectorAll("#floatingTextarea")[1].value;
-//   let movieReco = document.querySelectorAll("#floatingTextarea")[2].value;
+$("#addMemberBtn").click(async function () {
+  let image = $("#image").val();
+  let name = $("#name").val();
+  let blog = $("#blog").val();
+  let hobby = $("#hobby").val();
+  let collaboStyle = $("#collaboStyle").val();
+  let selfIntro = $("#selfIntro").val();
 
-//   let doc = {
-//     image: imageUrl,
-//     star: star,
-//     title: movieTtile,
-//     reco: movieReco,
-//   };
+  let doc = {
+    image: image,
+    name: name,
+    hobby: hobby,
+    blog: blog,
+    collaboStyle: collaboStyle,
+    selfIntro: selfIntro,
+  };
 
-//   if (!doc.image || !doc.star || !doc.title || !doc.reco) {
-//     alert("빈 칸을 채우세요.");
-//   } else {
-//     await addDoc(collection(db, "cards"), doc); // 콜렉션 이름에 저장이 된다
-//     alert("저장완료");
-//     window.location.reload();
-//   }
-// });
+  if (image === "") {
+    alert("이미지 주소를 입력해 주세요!");
+    return;
+  }
+  if (name === "") {
+    alert("이름을 입력해 주세요!");
+    return;
+  }
+  if (hobby === "") {
+    alert("취미를 입력해 주세요!");
+    return;
+  }
+  if (collaboStyle === "") {
+    alert("협업 스타일을 입력해 주세요!");
+    return;
+  }
+  if (blog === "") {
+    alert("블로그 주소를 입력해 주세요!");
+    return;
+  }
+  if (selfIntro === "") {
+    alert("자기 소개를 입력해 주세요!");
+    return;
+  }
+
+  await addDoc(collection(db, "members"), doc);
+  alert("등록 완료!");
+  $("#addMemberBtn").modal("hide");
+
+  //새로고침
+  window.location.reload();
+});
 
 // 데이터 읽기 스켈레톤
 let docs = await getDocs(collection(db, "members"));
-$(".crac").empty();
+$(".container").empty();
 $(".myself_intro").empty();
+$(".story").empty();
 docs.forEach((doc) => {
   let row = doc.data();
   let image = row.image;
   let name = row.name;
   let hobby = row.hobby;
-  let style = row.style;
+  let collaboStyle = row.collaboStyle;
   let blog = row.blog;
-  let myself_intro = row.myself_intro;
+  let selfIntro = row.selfIntro;
+  let detailName = row.detailName;
+  let detail = row.detail;
+  let now = new Date();
+  let year = now.getFullYear();
+  let month = now.getMonth();
+  let day = now.getDay();
+  let hour = now.getHours();
+  let minutes = now.getMinutes();
   let temp_html = `
+  <section class="crac">
     <img
       src="${image}"
       alt=""
@@ -78,19 +116,26 @@ docs.forEach((doc) => {
       <div>
         <span class="intro_q">협업 스타일</span>
         <br />
-        <span class="intro_a">${style}</span>
+        <span class="intro_a">${collaboStyle}</span>
       </div>
       <div>
         <span class="intro_q">블로그</span>
         <br />
-        <span class="intro_a">${blog}/span>
+        <span class="intro_a"><a href="#">${blog}</a></span>
       </div>
-
-  </section>
+      </section>
   <section class="myself_intro">
     <div class="myself_q">자기소개</div>
-    <p class="myself_a">${myself_intro}</p>
+    <p class="myself_a">${selfIntro}</p>
   </section>
+
   `;
-  $(".crac").append(temp_html);
+  $(".container").append(temp_html);
+  // <section class="msg">
+  // <div class="result_msg">
+  //   <span class="result_name">${detailName}</span>
+  //   <span class="result_detail">${detail}</span>
+  //   <span class="detail_time">${(year, month, day, hour, minutes)}</span>
+  // </div>
+  // </section>
 });
