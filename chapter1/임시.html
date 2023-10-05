@@ -25,18 +25,21 @@
     padding-top: 15px;
     padding-bottom: 20px;
   }
-  #memberSection{
+
+  #memberSection {
     width: 916px;
     margin: 0 auto;
   }
+
   nav {
     border: 1px solid gray;
   }
-  nav li{
+
+  nav li {
     padding: 6px 12px;
   }
 
-  nav li span{
+  nav li span {
     display: table-cell;
     vertical-align: middle;
     cursor: pointer;
@@ -44,16 +47,21 @@
     height: 100%;
   }
 
-  #memberCard{
+  #memberCard {
     padding: 15px 0;
     margin-top: 15px;
     background-color: #fff;
+  }
+
+  nav button {
+    margin-right: 12px;
   }
 </style>
 
 <scipt type="module">
 
 </scipt>
+
 <body>
   <div class="team">
     <!-- 팀명 -->
@@ -78,11 +86,14 @@
   <section id="memberSection">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <ul id="navbar" class="navbar-nav me-auto mb-2 mb-lg-0">
-    
+
       </ul>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+        멤버 추가 +
+      </button>
     </nav>
     <div id="memberCard">
-    
+
     </div>
   </section>
   <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -160,38 +171,38 @@
   }
   const getComment = async (memberId) => {
     console.log('겟 코멘트')
-      const q = query(collection(db, "comments"), where("memberId", "==", memberId));
-      const docs = await getDocs(q);
-      let sort = [];
-      let html = '';
+    const q = query(collection(db, "comments"), where("memberId", "==", memberId));
+    const docs = await getDocs(q);
+    let sort = [];
+    let html = '';
 
-      docs.forEach(doc => {
-        sort.push(doc.data());
-      });
+    docs.forEach(doc => {
+      sort.push(doc.data());
+    });
 
-      sort.sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    sort.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
-      sort.forEach((doc)=>{
-        let temp_html = `
+    sort.forEach((doc) => {
+      let temp_html = `
           <div class="result_msg">
             <span class="result_name">${doc.commentName}</span>
             <span class="result_detail">${doc.commentText}</span>
           </div>
         `
-        html += temp_html;
-      })
-      $('#commentField').html('');
-      $('#commentField').append(html);
+      html += temp_html;
+    })
+    $('#commentField').html('');
+    $('#commentField').append(html);
 
-    }
+  }
   const getAllMember = async () => {
     let firstMember = '';
     let docs = await getDocs(collection(db, "members"));
     console.log(docs.length)
-    docs.forEach((doc,index) => {
+    docs.forEach((doc, index) => {
       console.log(index)
       const data = doc.data();
-      if(firstMember !== '') firstMember = data;
+      if (firstMember !== '') firstMember = data;
       const html = `
         <li class="nav-item">
           <button type="button" data-member-id="${doc.id}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMemberModal">
@@ -205,9 +216,6 @@
 
     let memberAddHtml = `
       <li class="nav-item">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMemberModal">
-          멤버 추가 +
-        </button>
       </li>
     `;
     $('#navbar').append(memberAddHtml)
@@ -282,36 +290,37 @@
   }
 
 
-  $('#navbar').on("click",".nav-item span",async (element) => {
+  $('#navbar').on("click", ".nav-item span", async (element) => {
     console.log('네브 클릭 실행?')
     memberId = element.target.getAttribute('data-member-id');
 
     const data = await getMember(element.target.innerText);
-    
+
     memberCardInsert(data)
   })
 
-  $('#memberCard').on("click","#commentForm button",async ()=>{
-    
+  $('#memberCard').on("click", "#commentForm button", async () => {
+
     const data = {
       memberId: memberId, // 멤버 필드 아이디
       commentName: $('#commentName').val(),
       commentText: $('#commentText').val(),
-      date:new Date().getTime()
+      date: new Date().getTime()
     }
 
     try {
       const result = await addDoc(collection(db, "comments"), data);
-      
+
       await getComment(memberId)
     } catch (err) {
       console.log(err)
     }
   })
 
-  
 
-  
+
+
 
 </script>
+
 </html>
