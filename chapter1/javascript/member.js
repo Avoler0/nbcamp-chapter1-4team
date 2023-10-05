@@ -1,88 +1,82 @@
-// Firebase SDK 라이브러리 가져오기
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+import {db,app} from './firebase.js';
+import { memberCard } from './card.js';
+import { getComment } from './comment.js'
+
 import {
   doc,
   collection,
+  query,
+  where,
+  getDocs,
   addDoc,
   updateDoc,
+  getDoc,
 } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+console.log('멤버JS 실행')
 
-// Firebase 구성 정보 설정
-
-// Firebase 인스턴스 초기화
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-let members = [];
-let tempMembers;
-
-const getMembers = async () => {
-  try {
+const navItemInit = async () => {
+    console.log('네브 아이템 인잇')
+    let firstMember = "";
+    let firstId = "";
     let docs = await getDocs(collection(db, "members"));
-
+    let goodKingMember = {
+      id: '',
+      name: '',
+      good: 0
+    };
     docs.forEach((doc) => {
-      const id = doc.id;
       const data = doc.data();
+      
+      if (firstMember === "") {
+        firstMember = data
+        firstId = doc.id
+      };
+      if (data.good >= goodKingMember.good) {
+        goodKingMember.id = doc.id;
+        goodKingMember.name = data.name;
+        goodKingMember.good = data.good;
+      }
+      const html = `
+        <li class="nav-item">
+          <button type="button" id="memberNavBtn" data-member-id="${doc.id}" class="btn btn-outline-primary">
+            <span>${data.name}</span>
+            ${goodKingMember.name === data.name ? '<span class="goodman">인기👑</span>' : ''}
+          </button>
+        </li>
+      `;
+      memberCardInsert(firstMember, firstId);
 
-      members.push({ id, data });
-
-      let temp_html = `
-            <img src="${data.image}" />
-            <div>
-              <span>이름</span>
-              <span>${data.name}</span>
-            </div>
-            <div>
-              <span>취미</span>
-              <span>${data.hobby}</span>
-            </div>
-            <div>
-              <span>협업 스타일</span>
-              <span>${data.collaboStyle}</span>
-            </div>
-            <div>
-              <span>자기소개</span>
-              <span>${data.selfIntro}</span>
-            </div>
-            <div>
-              <button onclick="">추천</button>
-            </div>
-          `;
-
-      $("#memberCards").append(temp_html);
+      $("#navbar").append(html);
     });
-  } catch (err) {
-    alert("데이터 불러오기 실패");
-  }
+
+    let memberAddHtml = `
+          <li class="nav-item">
+          </li>
+        `;
+    $("#navbar").append(memberAddHtml);
+  };
+  navItemInit();
+
+export const navSelectMember = async (clickName) => {
+  console.log('네브 셀렉트 멤버')
+  let docs = await getDocs(collection(db, "members"));
+  let selectUserData;
+  docs.forEach((doc) => {
+    const { name } = doc.data();
+
+    if (name === clickName) {
+      selectUserData = doc.data();
+      return;
+    }
+  });
+
+  return selectUserData;
 };
 
-await getMembers();
-
-$("#test").click(async () => {
-  let doc = {
-    image: "hihi",
-    name: "정윤서",
-    hobby: "노래",
-    collaboStyle: "소통을 중요시 합니다.",
-    blog: "http:localhost:5173",
-    selfIntro: "안녕하세요 4조 팀장 정윤서입니다.",
-    good: +2,
-  };
-
-  await addDoc(collection(db, "members"), doc);
-
-  console.log("실행");
-});
-$("#test2").click(async () => {
-  // let docs = await getDocs(collection(db, "members"));
-
-  // docs.forEach((doc) => {
-  //   const id = doc.id;
-  //   const data = doc.data();
-
-  //   members.push({id,data})
-  // });
-  console.log("실행", tempMembers, members);
-});
+export const memberCardInsert = (data, id) => {
+  console.log('멤버 카드 인설트')
+  const cardHtml = memberCard(data,id);
+  getComment(id);
+  $("#memberCard").children().remove();
+  $("#memberCard").append(cardHtml);
+};
