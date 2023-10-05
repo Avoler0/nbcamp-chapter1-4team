@@ -99,14 +99,10 @@ body {
 }
 
 .good button{
-  border: 0;
   background: none;
   position: absolute;
   top: 0;
   right: 0;
-  /* margin-right: 15px;
-  
-  padding: 5px 8px; */
 }
 
 .story {
