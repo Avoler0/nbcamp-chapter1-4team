@@ -59,7 +59,19 @@
     font-size: 16px;
     height: 100%;
   }
-
+  .nav-item p{
+    position: relative;
+    padding-right: 15px;
+  }
+  .goodman{
+    top: 0;
+    left: 0;
+    position: absolute;
+    padding-bottom: 15px;
+    transform: translate(-13px,-11px) rotate(-20deg);
+    font-size: 12px;
+    color: black;
+  }
   #memberCard {
     padding: 15px 0;
     margin: 15px 0 40px;
@@ -217,18 +229,27 @@
     let docs = await getDocs(collection(db, "members"));
     console.log('겟 올 멤버',memberId)
     docs.forEach((doc) => {
+      const data = doc.data();
+      if (data.good >= goodKingMember.good) {
+        goodKingMember.id = doc.id;
+        goodKingMember.name = data.name;
+        goodKingMember.good = data.good;
+      }
+    });
+
+    docs.forEach((doc) => {
       
       const data = doc.data();
       if (firstMember === ''){
         memberId = doc.id
         firstMember = data;
       }
-      
-      console.log('퍼스트멤버',firstMember,memberId)
+
       const html = `
         <li class="nav-item">
           <p type="button" id="memberNavBtn" data-member-id="${doc.id}">
-            ${data.name}
+            <span>${data.name} </span>
+            ${goodKingMember.name === data.name ? '<span class="goodman">인기👑</span>' : ''}
           </p>
         </li>
       `
@@ -241,7 +262,7 @@
   let memberId;
   let goodKingMember = {
     name:'',
-    
+    good:0
   };
   const memberCardInsert = (data) => {
     const { name, hobby, collaboStyle, image, good, blog, selfIntro } = data;
