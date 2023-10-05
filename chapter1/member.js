@@ -21,9 +21,60 @@ const firebaseConfig = {
 // Firebase 인스턴스 초기화
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+console.log('실행')
+// // 데이터 추가 스켈레톤
+$("#addMemberBtn").click(async function () {
+  let image = $("#image").val();
+  let name = $("#name").val();
+  let blog = $("#blog").val();
+  let hobby = $("#hobby").val();
+  let collaboStyle = $("#collaboStyle").val();
+  let selfIntro = $("#selfIntro").val();
+
+  let doc = {
+    image: image,
+    name: name,
+    hobby: hobby,
+    blog: blog,
+    collaboStyle: collaboStyle,
+    selfIntro: selfIntro,
+    good:0
+  };
+
+  if (image === "") {
+    alert("이미지 주소를 입력해 주세요!");
+    return;
+  }
+  if (name === "") {
+    alert("이름을 입력해 주세요!");
+    return;
+  }
+  if (hobby === "") {
+    alert("취미를 입력해 주세요!");
+    return;
+  }
+  if (collaboStyle === "") {
+    alert("협업 스타일을 입력해 주세요!");
+    return;
+  }
+  if (blog === "") {
+    alert("블로그 주소를 입력해 주세요!");
+    return;
+  }
+  if (selfIntro === "") {
+    alert("자기 소개를 입력해 주세요!");
+    return;
+  }
+
+  await addDoc(collection(db, "members"), doc);
+  alert("등록 완료!");
+  $("#addMemberBtn").modal("hide");
+
+  //새로고침
+  window.location.reload();
+});
 
 // 데이터 읽기 스켈레톤
-// 캐릭터 특징, 자기소개 데이터 받아오고, comment.js에서 댓글 받아와 보여줌.
 let docs = await getDocs(collection(db, "members"));
 $(".container").empty();
 $(".myself_intro").empty();
@@ -32,11 +83,18 @@ docs.forEach((doc) => {
   let row = doc.data();
   let image = row.image;
   let name = row.name;
-  let good = row.good;
   let hobby = row.hobby;
   let collaboStyle = row.collaboStyle;
   let blog = row.blog;
   let selfIntro = row.selfIntro;
+  let detailName = row.detailName;
+  let detail = row.detail;
+  let now = new Date();
+  let year = now.getFullYear();
+  let month = now.getMonth() + 1;
+  let day = now.getDay();
+  let hour = now.getHours();
+  let minutes = now.getMinutes();
   let temp_html = `
   <section class="crac">
     <img
@@ -66,17 +124,21 @@ docs.forEach((doc) => {
         <br />
         <span class="intro_a"><a href="#">${blog}</a></span>
       </div>
-      <span class="good">👍${good}</span>
       </section>
   <section class="myself_intro">
     <div class="myself_q">자기소개</div>
     <p class="myself_a">${selfIntro}</p>
   </section>
-  <section class="msg">
-  <div class="cheerup_title">응원 메세지</div>
   <div class="story">
+    <section class="msg">
+      <div class="cheerup_title">응원 메세지</div>
+      <div class="result_msg">
+        <span class="result_name">김민재</span>
+        <span class="result_detail">응원 합니다.</span>
+        <span class="detail_time">2022.13.13 17:59</span>
+      </div>
+    </section>
   </div>
-  </section>
   `;
   $(".container").append(temp_html);
 });
