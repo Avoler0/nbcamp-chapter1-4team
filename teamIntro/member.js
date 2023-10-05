@@ -22,57 +22,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// // 데이터 추가 스켈레톤
-$("#addMemberBtn").click(async function () {
-  let image = $("#image").val();
-  let name = $("#name").val();
-  let blog = $("#blog").val();
-  let hobby = $("#hobby").val();
-  let collaboStyle = $("#collaboStyle").val();
-  let selfIntro = $("#selfIntro").val();
-
-  let doc = {
-    image: image,
-    name: name,
-    hobby: hobby,
-    blog: blog,
-    collaboStyle: collaboStyle,
-    selfIntro: selfIntro,
-  };
-
-  if (image === "") {
-    alert("이미지 주소를 입력해 주세요!");
-    return;
-  }
-  if (name === "") {
-    alert("이름을 입력해 주세요!");
-    return;
-  }
-  if (hobby === "") {
-    alert("취미를 입력해 주세요!");
-    return;
-  }
-  if (collaboStyle === "") {
-    alert("협업 스타일을 입력해 주세요!");
-    return;
-  }
-  if (blog === "") {
-    alert("블로그 주소를 입력해 주세요!");
-    return;
-  }
-  if (selfIntro === "") {
-    alert("자기 소개를 입력해 주세요!");
-    return;
-  }
-
-  await addDoc(collection(db, "members"), doc);
-  alert("등록 완료!");
-  $("#addMemberBtn").modal("hide");
-
-  //새로고침
-  window.location.reload();
-});
-
 // 데이터 읽기 스켈레톤
 // 캐릭터 특징, 자기소개 데이터 받아오고, comment.js에서 댓글 받아와 보여줌.
 let docs = await getDocs(collection(db, "members"));

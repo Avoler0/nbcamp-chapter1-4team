@@ -33,41 +33,16 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    //현재 시간 얻기 함수
-    const getCurrentTime = () => {
-      const date = new Date();
-      const Year = date.getFullYear();
-      const Month = date.getMonth() + 1;
-      const Day = date.getDay();
-      const Hour = date.getHours();
-      const Minute = date.getMinutes();
-      const Second = date.getSeconds();
-      const MSecond = date.getMilliseconds();
-      return Year + Month + Day + Hour + Minute + Second + MSecond;
-    };
-
     const handlerCommentAdd = async () => {
       // 댓글 입력
       const data = {
         memberId: "1", // 멤버 필드 아이디
         commentName: $("#nameInput").val(),
         commentText: $("#commentInput").val(),
-        time: getCurrentTime(),
       };
 
       try {
-        if (!data.commentName) {
-          alert("이름을 작성하세요.");
-        } else if (!data.commentText) {
-          alert("내용을 작성하세요");
-        } else {
-          const result = await addDoc(collection(db, "comments"), data);
-        }
-
-        data.sort((a, b) => {
-          return Number(a.data.time) - Number(b.data.time);
-        });
-        console.log(a.data.time);
+        const result = await addDoc(collection(db, "comments"), data);
         console.log(result);
       } catch (err) {
         console.log(err);
