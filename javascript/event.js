@@ -63,17 +63,19 @@ $("#addMemberBtn").click(async function () { // 멤버 추가
   window.location.reload();
 });
 
-$("nav #navbar").on("click", "#memberNavBtn", async (element) => {
-  // 네비게이션 이름 클릭
-  const dataMemberId = element.currentTarget.getAttribute("data-member-id");
-  const selectUserData = await navSelectMember(element.target.innerText);
-  console.log(dataMemberId)
-  memberCardInsert(selectUserData, dataMemberId);
+$("nav #navbar").on("click", "#memberNavBtn", async (element) => { // 네비게이션 이름 클릭
+  const dataMemberId = element.currentTarget.getAttribute("data-member-id"); 
+  // 클릭한 사람의 멤버 문서 ID 데이터를 가져옴 - 요소에 data-member-id
+  const selectUserData = await navSelectMember(element.target.innerText); 
+  // navSelectmember함수에 클릭한 사람의 이름을 전달 , return값은 데이터 베이스의 members 안에 저장된 유저 데이터
+  memberCardInsert(selectUserData, dataMemberId); 
+  // 리턴 받은 유저 데이터와, 가져온 사람의 memberId를 parameter로 전달
 });
 
-$("#memberCard").on("click", "#commentForm button", async () => {
-    // 댓글 추가
+$("#memberCard").on("click", "#commentForm button", async () => { // 댓글 추가 / 댓글 등록 버튼 클릭
+    
     const dataMemberId = $('#card').data('member-id');
+    // 
     const data = {
       memberId: dataMemberId, // 멤버 필드 아이디
       commentName: $("#commentName").val(),
@@ -81,7 +83,9 @@ $("#memberCard").on("click", "#commentForm button", async () => {
       date: new Date().getTime(),
     };
 
-    console.log(data);
+    if(data.commentName <= 0 || data.commentText <= 0){
+      return alert('내용을 입력해주세요.')
+    }
     try {
       await addDoc(collection(db, "comments"), data);
 
@@ -104,13 +108,14 @@ $("#memberCard").on("click", "#commentForm button", async () => {
     try {
       const memberData = await getDoc(doc(db, "members", dataMemberId));
       const { good } = memberData.data();
-      console.log(memberData.data())
+
       await updateDoc(doc(db, "members", dataMemberId), {
         good: good + 1,
       });
+
       const goodPlus = good + 1;
       $("#goodBtn").html(`👍${goodPlus}`);
-      
+
       window.localStorage.setItem('good',true);
     } catch (err) {
       console.log(err);

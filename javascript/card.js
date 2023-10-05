@@ -30,11 +30,9 @@ export const memberCard = (data,id) => {
                 <p class="intro_a"><a href="${blog}" target="_blank">${blog}</a></p>
               </div>
               <div class="good">
-
-                <button id="goodBtn" class="btn btn-outline-dark">👍${
-                  good === undefined ? 0 : good
-                }</button>  
-                <button id="goodBtn" class="btn btn-outline-dark">👍${good === undefined ? 0 : good}</button>  
+                <button id="goodBtn" class="btn btn-outline-dark">
+                  👍${ good === undefined ? 0 : good }
+                </button>  
               </div>
             </section>
             <section class="myself_intro">

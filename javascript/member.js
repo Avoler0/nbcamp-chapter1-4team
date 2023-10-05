@@ -24,9 +24,10 @@ const navItemInit = async () => {
       name: '',
       good: 0
     };
+    // console.log(docs.data().count)
     docs.forEach((doc) => {
       const data = doc.data();
-      
+      console.log(data.count)
       if (firstMember === "") {
         firstMember = data
         firstId = doc.id
@@ -37,7 +38,7 @@ const navItemInit = async () => {
         goodKingMember.name = data.name;
         goodKingMember.good = data.good;
       }
-      
+
       const html = `
       <li class="nav-item">
         <p id="memberNavBtn" data-member-id="${doc.id}">
@@ -64,6 +65,7 @@ export const navSelectMember = async (clickName) => {
   console.log('네브 셀렉트 멤버')
   let docs = await getDocs(collection(db, "members"));
   let selectUserData;
+  
   docs.forEach((doc) => {
     const { name } = doc.data();
 
