@@ -199,18 +199,18 @@
     let firstMember = '';
     let docs = await getDocs(collection(db, "members"));
     console.log(docs.length)
-    docs.forEach((doc, index) => {
-      console.log(index)
+    docs.forEach((doc) => {
+      console.log(doc)
       const data = doc.data();
-      if (firstMember !== '') firstMember = data;
+      if (firstMember === '') firstMember = data;
       const html = `
         <li class="nav-item">
-          <button type="button" data-member-id="${doc.id}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+          <button type="button" id="memberNavBtn" data-member-id="${doc.id}" class="btn btn-outline-primary">
             ${data.name}
           </button>
         </li>
       `
-      memberCardInsert(firstMember);
+      memberCardInsert(firstMember,doc.id);
       $('#navbar').append(html)
     });
 
@@ -224,9 +224,9 @@
 
   let memberId;
 
-  const memberCardInsert = (data) => {
+  const memberCardInsert = (data,id) => {
     const { name, hobby, collaboStyle, image, good, blog, selfIntro } = data;
-
+    memberId = id
     const cardHtml = `
       <div id="card">
         <section class="crac">
@@ -255,10 +255,10 @@
           <div>
             <span class="intro_q">블로그</span>
             <br />
-            <span class="intro_a"><a href="#">${blog}</a></span>
+            <span class="intro_a"><a href="${blog}" target="_blank">${blog}</a></span>
           </div>
           <div class="good">
-            <button>👍${good === undefined ? 0 : good}</button>  
+            <button id="goodBtn">👍${good === undefined ? 0 : good}</button>  
           </div>
         </section>
         <section class="myself_intro">
@@ -284,22 +284,21 @@
     </div>
       </div>
       `
-    getComment(memberId);
+    getComment(id);
     $('#memberCard').children().remove();
     $('#memberCard').append(cardHtml)
   }
 
-
-  $('#navbar').on("click", ".nav-item span", async (element) => {
+  $('#navbar').on("click", ".nav-item #memberNavBtn", async (element) => {
     console.log('네브 클릭 실행?')
     memberId = element.target.getAttribute('data-member-id');
 
     const data = await getMember(element.target.innerText);
 
-    memberCardInsert(data)
+    memberCardInsert(data, memberId)
   })
 
-  $('#memberCard').on("click", "#commentForm button", async () => {
+  $('#memberCard').on("click", "#commentForm button", async () => { // 댓글 추가
 
     const data = {
       memberId: memberId, // 멤버 필드 아이디
@@ -307,19 +306,38 @@
       commentText: $('#commentText').val(),
       date: new Date().getTime()
     }
-
+    console.log(data)
     try {
       const result = await addDoc(collection(db, "comments"), data);
 
       await getComment(memberId)
     } catch (err) {
-      console.log(err)
+      console.log('댓글 추가 에러',err)
     }
   })
 
 
+  $("#memberCard").on("click", ".good #goodBtn",async () => {
+      // 좋아요 클릭
+      try {
+        const memberData = await getDoc(
+          doc(db, "members", memberId)
+        );
+        const { good } = memberData.data();
 
+        await updateDoc(doc(db, "members", memberId), {
+          good: good + 1,
+        });
+        const goodPlus = good+1;
+        $("#goodBtn").html(`👍${goodPlus}`)
+      } catch (err) {
+        console.log(err);
+      } finally {
+        console.log("end");
+      }
+    })
 
+    
 
 </script>
 

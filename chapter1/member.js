@@ -38,6 +38,7 @@ $("#addMemberBtn").click(async function () {
     blog: blog,
     collaboStyle: collaboStyle,
     selfIntro: selfIntro,
+    good:0
   };
 
   if (image === "") {
