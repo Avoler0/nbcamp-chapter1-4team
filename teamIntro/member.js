@@ -74,6 +74,7 @@ $("#addMemberBtn").click(async function () {
 });
 
 // 데이터 읽기 스켈레톤
+// 이미지,이름,사진,협업 스타일,블로그, 자기소개 가져오고 응원메세지 틀 받아옴
 let docs = await getDocs(collection(db, "members"));
 $(".container").empty();
 $(".myself_intro").empty();

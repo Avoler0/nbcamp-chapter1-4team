@@ -102,39 +102,14 @@ body {
   border-radius: 10px;
   padding-bottom: 20px;
   margin-left: 35px;
+  margin-bottom: 10px;
 }
 
 .good {
   margin-left: auto;
 }
 
-/* .write {
-  padding-left: 20px;
-  margin-left: 20px;
-  background-color: white;
-  width: 600px;
-} */
-
-/* .name {
-  text-align: center;
-  margin-bottom: 10px;
-  width: 70px;
-  border-radius: 10px;
-  border: 1px rgba(195, 197, 198, 1) solid;
-}
-
-.detail {
-  width: 500px;
-  border-radius: 10px;
-  border: 1px rgba(195, 197, 198, 1) solid;
-} */
-
-/* button {
-  border-radius: 10px;
-  border: 1px rgba(195, 197, 198, 1) solid;
-  height: 40px;
-  text-align: center;
-} */
+/* // media query 500px 이하 */
 
 @media (max-width: 500px) {
   .crac {
