@@ -184,7 +184,7 @@
 
     return data;
   }
-  const getComment = async (memberId) => {
+  const getComment = async () => {
     console.log('겟 코멘트')
     const q = query(collection(db, "comments"), where("memberId", "==", memberId));
     const docs = await getDocs(q);
@@ -213,11 +213,15 @@
   const getAllMember = async () => {
     let firstMember = '';
     let docs = await getDocs(collection(db, "members"));
-    console.log(docs.length)
+    console.log('겟 올 멤버',memberId)
     docs.forEach((doc) => {
-      console.log(doc)
+      
       const data = doc.data();
-      if (firstMember === '') firstMember = data;
+      if (firstMember === ''){
+        memberId = doc.id
+        firstMember = data;
+      }
+      console.log('퍼스트멤버',firstMember,memberId)
       const html = `
         <li class="nav-item">
           <p type="button" id="memberNavBtn" data-member-id="${doc.id}">
@@ -225,7 +229,7 @@
           </p>
         </li>
       `
-      memberCardInsert(firstMember, doc.id);
+      memberCardInsert(firstMember);
       $('#navbar').append(html)
     });
   }
@@ -233,9 +237,9 @@
 
   let memberId;
 
-  const memberCardInsert = (data, id) => {
+  const memberCardInsert = (data) => {
     const { name, hobby, collaboStyle, image, good, blog, selfIntro } = data;
-    memberId = id
+
     const cardHtml = `
       <div id="card">
         <section class="crac">
@@ -293,7 +297,7 @@
     </div>
       </div>
       `
-    getComment(id);
+    getComment();
     $('#memberCard').children().remove();
     $('#memberCard').append(cardHtml)
 
@@ -309,7 +313,7 @@
 
     const data = await getMember(element.target.innerText);
 
-    memberCardInsert(data, memberId)
+    memberCardInsert(data)
   })
 
   $('#memberCard').on("click", "#commentForm button", async () => { // 댓글 추가
@@ -324,7 +328,7 @@
     try {
       const result = await addDoc(collection(db, "comments"), data);
 
-      await getComment(memberId)
+      await getComment()
     } catch (err) {
       console.log('댓글 추가 에러', err)
     }
