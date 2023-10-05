@@ -15,10 +15,6 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Nanum+Myeongjo:wght@800&family=Song+Myung&display=swap');
 
-  body {
-    font-family: 'Song Myung', serif;
-  }
-
   .team {
     width: 300px;
     margin: 20px auto 0px auto;
@@ -36,20 +32,11 @@
   }
 
   nav {
-    border: 0;
-    padding: 6px 12px !important;
-    border-radius: 10px;
-    box-shadow: 4px 4px 0 0 #ddd;
+    border: 1px solid gray;
   }
 
   nav li {
-    color: #bbb;
-    padding: 5px 10px;
-  }
-
-  nav li._on {
-    font-weight: bold;
-    color: #000;
+    padding: 6px 12px;
   }
 
   nav li span {
@@ -62,14 +49,12 @@
 
   #memberCard {
     padding: 15px 0;
-    margin: 15px 0 40px;
+    margin-top: 15px;
     background-color: #fff;
-    box-shadow: 4px 4px 0 0 #ddd;
-    border-radius: 10px;
   }
 
-  #memberNavBtn {
-    margin: 0;
+  nav button {
+    margin-right: 12px;
   }
 </style>
 
@@ -92,7 +77,7 @@
 
   <div>
     <!-- 팀 소개 -->
-    <p style="text-align: center;padding-bottom: 30px; font-size:22px;">
+    <p style="text-align: center;padding-bottom: 30px;">
       내일배움캠프 팀 '4달라' 입니다. 열심히 하겠습니다 ❣️
     </p>
   </div>
@@ -103,7 +88,7 @@
       <ul id="navbar" class="navbar-nav me-auto mb-2 mb-lg-0">
 
       </ul>
-      <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMemberModal">
         멤버 추가 +
       </button>
     </nav>
@@ -220,20 +205,26 @@
       if (firstMember === '') firstMember = data;
       const html = `
         <li class="nav-item">
-          <p type="button" id="memberNavBtn" data-member-id="${doc.id}">
+          <button type="button" id="memberNavBtn" data-member-id="${doc.id}" class="btn btn-outline-primary">
             ${data.name}
-          </p>
+          </button>
         </li>
       `
-      memberCardInsert(firstMember, doc.id);
+      memberCardInsert(firstMember,doc.id);
       $('#navbar').append(html)
     });
+
+    let memberAddHtml = `
+      <li class="nav-item">
+      </li>
+    `;
+    $('#navbar').append(memberAddHtml)
   }
   getAllMember();
 
   let memberId;
 
-  const memberCardInsert = (data, id) => {
+  const memberCardInsert = (data,id) => {
     const { name, hobby, collaboStyle, image, good, blog, selfIntro } = data;
     memberId = id
     const cardHtml = `
@@ -267,7 +258,7 @@
             <span class="intro_a"><a href="${blog}" target="_blank">${blog}</a></span>
           </div>
           <div class="good">
-            <button id="goodBtn" class="btn btn-outline-dark">👍${good === undefined ? 0 : good}</button>  
+            <button id="goodBtn">👍${good === undefined ? 0 : good}</button>  
           </div>
         </section>
         <section class="myself_intro">
@@ -296,11 +287,6 @@
     getComment(id);
     $('#memberCard').children().remove();
     $('#memberCard').append(cardHtml)
-
-    $('nav .nav-item p').on('click', function () {
-      $('nav .nav-item').removeClass('_on');
-      $(this).closest('.nav-item').addClass('_on');
-    });
   }
 
   $('#navbar').on("click", ".nav-item #memberNavBtn", async (element) => {
@@ -326,94 +312,40 @@
 
       await getComment(memberId)
     } catch (err) {
-      console.log('댓글 추가 에러', err)
+      console.log('댓글 추가 에러',err)
     }
   })
 
-  $("#memberCard").on("click", ".good #goodBtn", async () => {
-    // 좋아요 클릭
-    const goodTrue = window.localStorage.getItem('good');
 
-    if (goodTrue) return alert('이미 좋아요를 누르셨습니다.')
+  $("#memberCard").on("click", ".good #goodBtn",async () => {
+      // 좋아요 클릭
+      const goodTrue = window.localStorage.getItem('good');
 
-    try {
-      const memberData = await getDoc(
-        doc(db, "members", memberId)
-      );
-      const { good } = memberData.data();
+      if(goodTrue) return alert('이미 좋아요를 누르셨습니다.')
 
-      await updateDoc(doc(db, "members", memberId), {
-        good: good + 1,
-      });
+      try {
+        const memberData = await getDoc(
+          doc(db, "members", memberId)
+        );
+        const { good } = memberData.data();
 
-      window.localStorage.setItem('good', true)
+        await updateDoc(doc(db, "members", memberId), {
+          good: good + 1,
+        });
 
-      const goodPlus = good + 1;
+        window.localStorage.setItem('good',true)
 
-      $("#goodBtn").html(`👍${goodPlus}`)
-    } catch (err) {
-      console.log(err);
-    } finally {
-      console.log("end");
-    }
-  })
+        const goodPlus = good+1;
 
-  $("#addMemberBtn").click(async function () {
-    let image = $('#image').val();
-    let name = $('#name').val();
-    let blog = $('#blog').val();
-    let hobby = $('#hobby').val();
-    let collaboStyle = $('#collaboStyle').val();
-    let selfIntro = $('#selfIntro').val();
+        $("#goodBtn").html(`👍${goodPlus}`)
+      } catch (err) {
+        console.log(err);
+      } finally {
+        console.log("end");
+      }
+    })
 
-    let doc = {
-      'image': image,
-      'name': name,
-      'hobby': hobby,
-      'blog': blog,
-      'collaboStyle': collaboStyle,
-      'selfIntro': selfIntro,
-      'good': 0,
-    };
-
-    if (image === '') {
-      alert('이미지 주소를 입력해 주세요!')
-      $('#image').focus();
-      return
-    }
-    if (name === '') {
-      alert('이름을 입력해 주세요!')
-      $('#name').focus();
-      return
-    }
-    if (hobby === '') {
-      alert('취미를 입력해 주세요!')
-      $('#hobby').focus();
-      return
-    }
-    if (collaboStyle === '') {
-      alert('협업 스타일을 입력해 주세요!')
-      $('#collaboStyle').focus();
-      return
-    }
-    if (blog === '') {
-      alert('블로그 주소를 입력해 주세요!')
-      $('#blog').focus();
-      return
-    }
-    if (selfIntro === '') {
-      alert('자기 소개를 입력해 주세요!')
-      $('#selfIntro').focus();
-      return
-    }
-
-    await addDoc(collection(db, "members"), doc);
-    alert('등록 완료!');
-    $('#addMemberBtn').modal('hide');
-
-    //새로고침
-    window.location.reload();
-  })
+    
 
 </script>
 
