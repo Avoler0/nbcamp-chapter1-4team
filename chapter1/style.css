@@ -12,7 +12,8 @@ body {
   position: relative;
   display: flex;
   padding-bottom: 20px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #eee;
+  margin:0 10px;
 }
 
 .person_img {
@@ -76,8 +77,8 @@ body {
   background-color: #edebeb;
   width: 100%;
   margin-bottom: 10px;
-  padding: 10px 5px;
-  border-radius: 15px;
+  padding: 10px 15px;
+  border-radius: 5px;
 }
 
 .result_name {
@@ -128,15 +129,22 @@ body {
 #input #commentName{
   width: 15%;
   outline: none;
-  padding: 0 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border:1px solid #ddd;
+  text-indent: 5px;
 }
 
 #input #commentText{
   flex-grow: 1;
   resize: none;
   outline: none;
-  padding: 0 5px;
+  padding: 5px;
   margin: 0;
+  border-radius: 5px;
+  border-color: #ddd;
+  margin-right: 5px;
+  text-indent:5px;
 }
 .textdiv{
   display: flex;
@@ -145,6 +153,7 @@ body {
   position: relative;
 }
 #commentBtn{
+  width: 80px;
   height: 100%;
   border: 1px solid rgb(189, 181, 181);
 }

@@ -27,6 +27,7 @@
 
   .teamimg {
     padding-top: 15px;
+    cursor: pointer;
   }
 
   #memberSection {
@@ -36,7 +37,7 @@
 
   nav {
     border: 0;
-    padding: 6px 12px !important;
+    padding: 12px !important;
     border-radius: 10px;
     box-shadow: 4px 4px 0 0 #ddd;
   }
@@ -132,7 +133,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">멤버 추가</h5>
+          <h5 class="modal-title" style="font-weight: bold;">멤버 추가</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -162,8 +163,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-          <button type="button" class="btn btn-primary" id="addMemberBtn">등록</button>
+          <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-dark" id="addMemberBtn">등록</button>
         </div>
       </div>
     </div>
@@ -320,7 +321,7 @@
               <input type="text" id="commentName" placeholder="이름" />
               <div class="textdiv">
                 <textarea id="commentText" placeholder="댓글 내용"/>
-                <button id="commentBtn">등록</button>
+                <button id="commentBtn" class="btn btn-outline-dark">등록</button>
               </div>
             </div>
             
@@ -371,6 +372,7 @@
     const goodTrue = window.localStorage.getItem('good');
 
     if (goodTrue) return alert('이미 좋아요를 누르셨습니다.')
+
 
     try {
       const memberData = await getDoc(
