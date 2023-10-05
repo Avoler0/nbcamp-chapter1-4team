@@ -54,7 +54,7 @@ body {
 }
 
 .msg {
-  margin: 50px 0px 50px 40px;
+  margin: 10px;
 }
 
 .cheerup_title {
@@ -67,7 +67,6 @@ body {
   display: flex;
   flex-direction: column;
   border-top: 1px solid black;
-  padding: 10px 0px 10px 0px;
   width: 450px;
 }
 
