@@ -51,7 +51,7 @@ export const navItemInit = async () => {
     });
 
     $("nav .nav-item:first-child").addClass("_on");
-    console.log(goodKingMember)
+
     // $("nav .nav-item p").on("click", function () {
     //   $("nav .nav-item").removeClass("_on");
     //   $(this).closest(".nav-item").addClass("_on");

@@ -116,7 +116,7 @@ $("#memberCard").on("click", "#commentForm button", async () => { // 댓글 추�
   $("#memberCard").on("click", ".good #goodBtn", async () => {
     // 좋아요 클릭
     const dataMemberId = $('#card').data('member-id');
-    const goodSwitch = window.localStorage.getItem('good');
+    const goodSwitch = window.localStorage.getItem('goodBtn');
     
     if(goodSwitch) return alert('이미 좋아요를 누르셨습니다.');
 
@@ -131,11 +131,10 @@ $("#memberCard").on("click", "#commentForm button", async () => { // 댓글 추�
       const goodPlus = good + 1;
       $("#goodBtn").html(`👍${goodPlus}`);
 
-      window.localStorage.setItem('good',true);
+      window.localStorage.setItem('goodBtn',true);
     } catch (err) {
       console.log(err);
     } finally {
-      console.log("end");
       navItemInit();
     }
   });
