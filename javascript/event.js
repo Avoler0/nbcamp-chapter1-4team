@@ -1,4 +1,4 @@
-import { navSelectMember, memberCardInsert } from "./member.js";
+import { navSelectMember, memberCardInsert, navItemInit } from "./member.js";
 import { getComment } from "./comment.js";
 import {db,app} from './firebase.js';
 import {
@@ -61,7 +61,7 @@ $("#addMemberBtn").click(async function () { // 멤버 추가
   window.location.reload();
 });
 
-$(document).on("click", ".commentDeleteBtn", async (event) => {
+$(document).on("click", ".commentDeleteBtn", async (event) => { // 댓글 삭제
   event.preventDefault();
   const id = event.target.parentElement.parentElement.getAttribute("data-comment-id");
   const ok = window.confirm("삭제");
@@ -77,12 +77,15 @@ $(document).on("click", ".commentDeleteBtn", async (event) => {
 });
 
 $("nav #navbar").on("click", "#memberNavBtn", async (element) => { // 네비게이션 이름 클릭
-  const dataMemberId = element.currentTarget.getAttribute("data-member-id"); 
-  // 클릭한 사람의 멤버 문서 ID 데이터를 가져옴 - 요소에 data-member-id
-  const selectUserData = await navSelectMember(element.target.innerText); 
-  // navSelectmember함수에 클릭한 사람의 이름을 전달 , return값은 데이터 베이스의 members 안에 저장된 유저 데이터
-  memberCardInsert(selectUserData, dataMemberId); 
-  // 리턴 받은 유저 데이터와, 가져온 사람의 memberId를 parameter로 전달
+    $("nav .nav-item").removeClass("_on");
+    $(element.target).closest(".nav-item").addClass("_on");
+    const dataMemberId = element.currentTarget.getAttribute("data-member-id"); 
+    // 클릭한 사람의 멤버 문서 ID 데이터를 가져옴 - 요소에 data-member-id
+    const selectUserData = await navSelectMember(dataMemberId); 
+    // navSelectmember함수에 클릭한 사람의 이름을 전달 , return값은 데이터 베이스의 members 안에 저장된 유저 데이터
+    memberCardInsert(selectUserData, dataMemberId); 
+    // 리턴 받은 유저 데이터와, 가져온 사람의 memberId를 parameter로 전달
+
 });
 
 $("#memberCard").on("click", "#commentForm button", async () => { // 댓글 추가 / 댓글 등록 버튼 클릭
@@ -133,6 +136,7 @@ $("#memberCard").on("click", "#commentForm button", async () => { // 댓글 추�
       console.log(err);
     } finally {
       console.log("end");
+      navItemInit();
     }
   });
 
