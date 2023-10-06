@@ -14,13 +14,14 @@ export const getComment = async (memberId) => {
     where("memberId", "==", memberId),
   );
   const docs = await getDocs(q);
+  let html = "";
   let sortArray = [];
   
-  docs.forEach((doc) => sort.push({ data: doc.data(), id: doc.id }););
+  docs.forEach((doc) => sortArray.push({ data: doc.data(), id: doc.id }));
 
   sortArray.sort((a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime());
 
-  sort.forEach((doc) => {
+  sortArray.forEach((doc) => {
     let temp_html = `
       <div class="result_msg" data-comment-id='${doc.id}'>
         <span class="result_name">${doc.data.commentName}</span>
