@@ -17,9 +17,14 @@
 </head>
 <style>
   @import url("https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Nanum+Myeongjo:wght@800&family=Song+Myung&display=swap");
-
+  @font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
   body {
-    font-family: "Song Myung", serif;
+    font-family: 'Pretendard-Regular';
   }
 
   .team {
@@ -94,81 +99,81 @@
 </script>
 
 <body>
-  <div class="team">
-    <!-- 팀명 -->
-    <h1 style="
-        text-align: center;
-        font-family: 'Song Myung', serif;
-        font-size: 400%;
-      ">
-      4달라
-    </h1>
-
-    <!-- 팀 이미지 -->
-    <img
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT19vppnSx8TQbGZsMO8iEsBqUCKKAc2KIFSbd7MWFr_b-jfzAD0WqnaTonJ0JDl5oMrKc&usqp=CAU"
-      class="teamimg" alt="" value="PLAY" onclick="play()" />
-    <audio id="audio" src="./assets/okay.mp3"></audio>
-    <p style="font-size: 14px; text-align: center">이미지를 클릭해 주세요!</p>
-  </div>
-
-  <div>
-    <!-- 팀 소개 -->
-    <p style="text-align: center; padding-bottom: 30px; font-size: 22px">
-      내일배움캠프 팀 '4달라' 입니다. 열심히 하겠습니다 ❣️
-    </p>
-  </div>
-
-  <!-- 팀원 소개 네비게이션 바 -->
-  <section id="memberSection">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <ul id="navbar" class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-      <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#addMemberModal">
-        멤버 추가 +
-      </button>
-    </nav>
-    <div id="memberCard"></div>
-  </section>
-  <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" style="font-weight: bold">멤버 추가</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="image" class="form-label h6">이미지</label>
-            <input type="text" class="form-control" id="image" placeholder="이미지 주소를 입력해 주세요." />
+  <div id="wrap">
+    <div class="team">
+      <!-- 팀명 -->
+      <h1 style="
+            text-align: center;
+            font-family: 'Song Myung', serif;
+            font-size: 400%;
+          ">
+        4달라
+      </h1>
+      <!-- 팀 이미지 -->
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT19vppnSx8TQbGZsMO8iEsBqUCKKAc2KIFSbd7MWFr_b-jfzAD0WqnaTonJ0JDl5oMrKc&usqp=CAU"
+        class="teamimg" alt="" value="PLAY" onclick="play()" />
+      <audio id="audio" src="./assets/okay.mp3"></audio>
+      <p style="font-size: 14px; text-align: center">이미지를 클릭해 주세요!</p>
+    </div>
+    
+    <div>
+      <!-- 팀 소개 -->
+      <p style="text-align: center; padding-bottom: 30px; font-size: 22px">
+        내일배움캠프 팀 '4달라' 입니다. 열심히 하겠습니다 ❣️
+      </p>
+    </div>
+    <!-- 팀원 소개 네비게이션 바 -->
+    <section id="memberSection">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <ul id="navbar" class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+          멤버 추가 +
+        </button>
+      </nav>
+      <div id="memberCard"></div>
+    </section>
+    <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="font-weight: bold">멤버 추가</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="mb-3">
-            <label for="name" class="form-label">이름</label>
-            <input type="text" class="form-control" id="name" placeholder="이름을 입력해 주세요." />
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="image" class="form-label h6">이미지</label>
+              <input type="text" class="form-control" id="image" placeholder="이미지 주소를 입력해 주세요." />
+            </div>
+            <div class="mb-3">
+              <label for="name" class="form-label">이름</label>
+              <input type="text" class="form-control" id="name" placeholder="이름을 입력해 주세요." />
+            </div>
+            <div class="mb-3">
+              <label for="hobby" class="form-label">취미</label>
+              <input type="text" class="form-control" id="hobby" placeholder="취미를 입력해 주세요." />
+            </div>
+            <div class="mb-3">
+              <label for="collaboStyle" class="form-label">협업 스타일</label>
+              <input type="text" class="form-control" id="collaboStyle" placeholder="협업 스타일을 간단히 입력해 주세요." />
+            </div>
+            <div class="mb-3">
+              <label for="blog" class="form-label">블로그</label>
+              <input type="text" class="form-control" id="blog" placeholder="블로그 주소를 입력해 주세요." />
+            </div>
+            <div class="mb-3">
+              <label for="selfIntro" class="form-label">자기 소개</label>
+              <input type="text" class="form-control" id="selfIntro" placeholder="자기 소개를 입력해 주세요." />
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="hobby" class="form-label">취미</label>
-            <input type="text" class="form-control" id="hobby" placeholder="취미를 입력해 주세요." />
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+              취소
+            </button>
+            <button type="button" class="btn btn-dark" id="addMemberBtn">
+              등록
+            </button>
           </div>
-          <div class="mb-3">
-            <label for="collaboStyle" class="form-label">협업 스타일</label>
-            <input type="text" class="form-control" id="collaboStyle" placeholder="협업 스타일을 간단히 입력해 주세요." />
-          </div>
-          <div class="mb-3">
-            <label for="blog" class="form-label">블로그</label>
-            <input type="text" class="form-control" id="blog" placeholder="블로그 주소를 입력해 주세요." />
-          </div>
-          <div class="mb-3">
-            <label for="selfIntro" class="form-label">자기 소개</label>
-            <input type="text" class="form-control" id="selfIntro" placeholder="자기 소개를 입력해 주세요." />
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
-            취소
-          </button>
-          <button type="button" class="btn btn-dark" id="addMemberBtn">
-            등록
-          </button>
         </div>
       </div>
     </div>

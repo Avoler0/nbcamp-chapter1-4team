@@ -1,8 +1,12 @@
 
 
 export const memberCard = (data,id) => {
+  if(!data){
+    alert('페이지 이동이 너무 빠릅니다.')
+    window.location.reload();
+  }
   const { name, hobby, collaboStyle, image, good, blog, selfIntro } = data;
-  console.log('데이터',data);
+  
   const cardHtml = `
             <div id="card" data-member-id="${id}">
             <section class="crac">
