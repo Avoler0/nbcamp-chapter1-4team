@@ -30,8 +30,8 @@ export const getComment = async (memberId) => {
         <div class="resultBottom">
           <span class="result_date">${timeFormat(doc.data.date)}</span>
           <div>
-            <button class="commentBtn">수정</button>
-            <button class="commentBtn">삭제</button>
+            <button class="commentBtn updateBtn">수정</button>
+            <button class="commentBtn delteBtn">삭제</button>
           </div>
         </div>
       </div>

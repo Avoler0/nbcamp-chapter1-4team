@@ -61,9 +61,9 @@ $("#addMemberBtn").click(async function () { // 멤버 추가
   window.location.reload();
 });
 
-$(document).on("click", ".commentDeleteBtn", async (event) => { // 댓글 삭제
+$(document).on("click", ".commentBtn.delteBtn", async (event) => { // 댓글 삭제
   event.preventDefault();
-  const id = event.target.parentElement.parentElement.getAttribute("data-comment-id");
+  const id = event.target.parentElement.parentElement.parentElement.getAttribute("data-comment-id");
   const ok = window.confirm("삭제");
   if (ok) {
     try {
