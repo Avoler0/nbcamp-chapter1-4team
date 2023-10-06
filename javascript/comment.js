@@ -26,10 +26,13 @@ export const getComment = async (memberId) => {
       <div class="result_msg" data-comment-id='${doc.id}'>
         <span class="result_name">${doc.data.commentName}</span>
         <span class="result_detail">${doc.data.commentText}</span>
-        <span class="result_date">${timeFormat(doc.data.date)}</span>
-        <div class="resultCommentBtn">
-          <button class="commentUpdateBtn">수정</button>
-          <button class="commentDeleteBtn">삭제</button>
+        
+        <div class="resultBottom">
+          <span class="result_date">${timeFormat(doc.data.date)}</span>
+          <div>
+            <button class="commentBtn">수정</button>
+            <button class="commentBtn">삭제</button>
+          </div>
         </div>
       </div>
     `;
