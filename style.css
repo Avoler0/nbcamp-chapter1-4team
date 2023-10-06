@@ -1,13 +1,87 @@
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
+  font-family: 'Pretendard-Regular';
   margin: 0;
   background-color: #ede9e9;
 }
-canvas{
+
+canvas {
   margin: 0 auto;
 }
+
 #wrap {
   width: 916px;
   margin: 0 auto;
+}
+
+.team {
+  width: 300px;
+  margin: 20px auto 0 auto;
+}
+
+.teamimg {
+  padding-top: 15px;
+  cursor: pointer;
+}
+
+#memberSection {
+  width: 916px;
+  margin: 0 auto;
+}
+
+nav {
+  border: 0;
+  padding: 12px !important;
+  box-shadow: 4px 4px 0 0 #ddd;
+}
+
+nav li {
+  color: #bbb;
+  padding: 5px 10px;
+}
+
+nav li._on {
+  font-weight: bold;
+  color: #000;
+}
+
+nav li span {
+  display: table-cell;
+  vertical-align: middle;
+  cursor: pointer;
+  font-size: 16px;
+  height: 100%;
+}
+
+.nav-item p {
+  position: relative;
+  padding-right: 15px;
+}
+
+.goodman {
+  top: 0;
+  left: 0;
+  position: absolute;
+  transform: translate(-13px, -11px) rotate(-20deg);
+  font-size: 12px;
+  color: black;
+}
+
+#memberCard {
+  padding: 15px 0;
+  margin: 15px 0 40px;
+  background-color: #fff;
+  box-shadow: 4px 4px 0 0 #ddd;
+}
+
+#memberNavBtn {
+  margin: 0;
 }
 
 #game {
@@ -25,7 +99,7 @@ canvas{
   display: flex;
   padding-bottom: 20px;
   border-bottom: 1px solid #eee;
-  margin:0 10px;
+  margin: 0 10px;
 }
 
 .person_img {
@@ -42,7 +116,7 @@ canvas{
 .intro_q {
   font-size: 18px;
   font-weight: bold;
-  margin-bottom:0;
+  margin-bottom: 0;
 }
 
 .intro_a {
@@ -50,16 +124,14 @@ canvas{
   white-space: pre-line;
   height: auto;
   font-weight: lighter;
-  margin-bottom:0.3rem;
+  margin-bottom: 0.3rem;
 }
 
-.myself_intro {
-
-}
+.myself_intro {}
 
 .myself_q {
   margin-top: 15px;
-  padding-left:10px;
+  padding-left: 10px;
   padding-bottom: 5px;
   font-weight: 600;
   font-size: 20px;
@@ -68,7 +140,7 @@ canvas{
 .myself_a {
   background-color: rgb(243, 243, 243);
   border-radius: 8px;
-  padding:20px;
+  padding: 20px;
 }
 
 .msg {
@@ -111,7 +183,7 @@ canvas{
   color: grey;
 }
 
-.good button{
+.good button {
   background: none;
   position: absolute;
   top: 0;
@@ -124,26 +196,25 @@ canvas{
   height: auto;
 }
 
-#commentForm{
+#commentForm {
   margin-top: 15px;
 }
 
-
-#input{
+#input {
   display: flex;
   flex-direction: column;
 }
 
-#input #commentName{
+#input #commentName {
   width: 15%;
   outline: none;
   padding: 5px;
   border-radius: 5px;
-  border:1px solid #ddd;
+  border: 1px solid #ddd;
   text-indent: 5px;
 }
 
-#input #commentText{
+#input #commentText {
   flex-grow: 1;
   resize: none;
   outline: none;
@@ -152,15 +223,17 @@ canvas{
   border-radius: 5px;
   border-color: #ddd;
   margin-right: 5px;
-  text-indent:5px;
+  text-indent: 5px;
 }
-.textdiv{
+
+.textdiv {
   display: flex;
   height: 50px;
   margin-top: 5px;
   position: relative;
 }
-#commentBtn{
+
+#commentBtn {
   width: 80px;
   height: 100%;
   border: 1px solid rgb(189, 181, 181);
@@ -175,7 +248,7 @@ canvas{
   font-size: 12px;
 }
 
-.resultBottom div:last-child{
+.resultBottom div:last-child {
   display: flex;
 }
 
@@ -187,7 +260,7 @@ canvas{
   margin-right: 10px;
 }
 
-.resultBottom div :last-child{
+.resultBottom div:last-child {
   margin-right: 0;
 }
 

@@ -5,7 +5,7 @@ import {
   query,
   where,
   getDocs,
-  orderBy,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 export const getComment = async (memberId) => {
@@ -13,31 +13,31 @@ export const getComment = async (memberId) => {
     collection(db, "comments"),
     where("memberId", "==", memberId),
   );
-  const docs = await getDocs(q);
-  let html = "";
-  let sortArray = [];
-  
-  docs.forEach((doc) => sortArray.push({ data: doc.data(), id: doc.id }));
+  const querySnapshot = await getDocs(q);
 
-  sortArray.sort((a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime());
+  const comments = querySnapshot.docs.map((doc) => {
+    return {
+      id: doc.id,
+      data: doc.data(),
+    };
+  });
 
-  sortArray.forEach((doc) => {
-    let temp_html = `
-      <div class="result_msg" data-comment-id='${doc.id}'>
-        <span class="result_name">${doc.data.commentName}</span>
-        <span class="result_detail">${doc.data.commentText}</span>
-        
-        <div class="resultBottom">
-          <span class="result_date">${timeFormat(doc.data.date)}</span>
-          <div>
-            <button class="commentBtn updateBtn">수정</button>
-            <button class="commentBtn delteBtn">삭제</button>
-          </div>
+  comments.sort((a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime());
+
+  const html = comments.map((comment) => `
+    <div class="result_msg" data-comment-id='${comment.id}'>
+      <span class="result_name">${comment.data.commentName}</span>
+      <span class="result_detail">${comment.data.commentText}</span>
+      
+      <div class="resultBottom">
+        <span class="result_date">${timeFormat(comment.data.date)}</span>
+        <div>
+          <button class="commentBtn updateBtn">수정</button>
+          <button class="commentBtn delteBtn">삭제</button>
         </div>
       </div>
-    `;
-    html += temp_html;
-  });
-  $("#commentField").html("");
-  $("#commentField").append(html);
+    </div>
+  `).join("");
+
+  $("#commentField").empty().append(html);
 };

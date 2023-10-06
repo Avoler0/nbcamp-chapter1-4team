@@ -38,12 +38,12 @@ export const navItemInit = async () => {
       }
 
       const html = `
-      <li class="nav-item">
-        <p id="memberNavBtn" data-member-id="${doc.id}">
-          <span>${data.name}</span>
-          ${goodKingMember.name === data.name ? '<span class="goodman">인기👑</span>' : ''}
-        </p>
-      </li>
+        <li class="nav-item">
+          <p id="memberNavBtn" data-member-id="${doc.id}">
+            <span>${data.name}</span>
+            ${goodKingMember.name === data.name ? '<span class="goodman">인기👑</span>' : ''}
+          </p>
+        </li>
       `;
       memberCardInsert(firstMember, firstId);
 

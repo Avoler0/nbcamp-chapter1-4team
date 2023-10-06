@@ -63,17 +63,18 @@ $("#addMemberBtn").click(async function () { // 멤버 추가
 
 $(document).on("click", ".commentBtn.delteBtn", async (event) => { // 댓글 삭제
   event.preventDefault();
-  const id = event.target.parentElement.parentElement.parentElement.getAttribute("data-comment-id");
-  const ok = window.confirm("삭제");
-  if (ok) {
-    try {
-      await deleteDoc(doc(db, "comments", id));
-      alert("삭제완료");
-      window.location.reload();
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  console.log(event.currentTarget.nextElementSibling)
+  // const id = event.target.parentElement.parentElement.parentElement.getAttribute("data-comment-id");
+  // const ok = window.confirm("삭제");
+  // if (ok) {
+  //   try {
+  //     await deleteDoc(doc(db, "comments", id));
+  //     alert("삭제완료");
+  //     window.location.reload();
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
 });
 
 $("nav #navbar").on("click", "#memberNavBtn", async (element) => { // 네비게이션 이름 클릭
