@@ -171,6 +171,8 @@ canvas{
   display: flex;
   justify-content: space-between;
   margin-left: auto;
+  margin-top: 10px;
+  font-size: 12px;
 }
 
 .resultBottom div:last-child{
