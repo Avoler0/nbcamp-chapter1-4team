@@ -65,7 +65,6 @@ export const navSelectMember = async (clickName) => {
   console.log('네브 셀렉트 멤버')
   let docs = await getDocs(collection(db, "members"));
   let selectUserData;
-  
   docs.forEach((doc) => {
     const { name } = doc.data();
 

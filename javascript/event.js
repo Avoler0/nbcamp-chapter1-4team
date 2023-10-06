@@ -4,9 +4,7 @@ import {db,app} from './firebase.js';
 import {
   doc,
   collection,
-  query,
-  where,
-  getDocs,
+  deleteDoc,
   addDoc,
   updateDoc,
   getDoc,
@@ -63,6 +61,21 @@ $("#addMemberBtn").click(async function () { // 멤버 추가
   window.location.reload();
 });
 
+$(document).on("click", ".commentDeleteBtn", async (event) => {
+  event.preventDefault();
+  const id = event.target.parentElement.parentElement.getAttribute("data-comment-id");
+  const ok = window.confirm("삭제");
+  if (ok) {
+    try {
+      await deleteDoc(doc(db, "comments", id));
+      alert("삭제완료");
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+});
+
 $("nav #navbar").on("click", "#memberNavBtn", async (element) => { // 네비게이션 이름 클릭
   const dataMemberId = element.currentTarget.getAttribute("data-member-id"); 
   // 클릭한 사람의 멤버 문서 ID 데이터를 가져옴 - 요소에 data-member-id
@@ -73,7 +86,6 @@ $("nav #navbar").on("click", "#memberNavBtn", async (element) => { // 네비게�
 });
 
 $("#memberCard").on("click", "#commentForm button", async () => { // 댓글 추가 / 댓글 등록 버튼 클릭
-    
     const dataMemberId = $('#card').data('member-id');
     // 
     const data = {
