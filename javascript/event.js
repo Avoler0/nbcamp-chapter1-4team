@@ -1,6 +1,6 @@
 import { navSelectMember, memberCardInsert, navItemInit } from "./member.js";
 import { getComment } from "./comment.js";
-import {db,app} from './firebase.js';
+import {db} from './firebase.js';
 import {
   doc,
   collection,
@@ -10,7 +10,10 @@ import {
   getDoc,
 } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-$("#addMemberBtn").click(async function () { // 멤버 추가 
+$("#addMemberBtn").click(async function () {
+  // 멤버 추가 버튼 클릭 시 실행
+
+  // 입력된 값들을 변수에 저장합니다.
   let image = $("#image").val();
   let name = $("#name").val();
   let blog = $("#blog").val();
@@ -18,6 +21,7 @@ $("#addMemberBtn").click(async function () { // 멤버 추가
   let collaboStyle = $("#collaboStyle").val();
   let selfIntro = $("#selfIntro").val();
 
+  // 멤버 정보를 객체로 정리합니다.
   let doc = {
     image: image,
     name: name,
@@ -25,120 +29,157 @@ $("#addMemberBtn").click(async function () { // 멤버 추가
     blog: blog,
     collaboStyle: collaboStyle,
     selfIntro: selfIntro,
-    good:0
+    good: 0
   };
 
-  if (image === "") {
-    alert("이미지 주소를 입력해 주세요!");
-    return;
-  }
-  if (name === "") {
-    alert("이름을 입력해 주세요!");
-    return;
-  }
-  if (hobby === "") {
-    alert("취미를 입력해 주세요!");
-    return;
-  }
-  if (collaboStyle === "") {
-    alert("협업 스타일을 입력해 주세요!");
-    return;
-  }
-  if (blog === "") {
-    alert("블로그 주소를 입력해 주세요!");
-    return;
-  }
-  if (selfIntro === "") {
-    alert("자기 소개를 입력해 주세요!");
+  // 필수 정보를 입력하지 않은 경우 알림을 띄우고 종료합니다.
+  if (image === "" || name === "" || hobby === "" || collaboStyle === "" || blog === "" || selfIntro === "") {
+    alert("모든 정보를 입력해 주세요!");
     return;
   }
 
-  await addDoc(collection(db, "members"), doc);
-  alert("등록 완료!");
-  $("#addMemberBtn").modal("hide");
+  try {
+    // Firestore에 멤버 추가
+    await addDoc(collection(db, "members"), doc);
 
-  //새로고침
-  window.location.reload();
+    // 알림 띄우기
+    alert("등록 완료!");
+
+    // 모달 닫기
+    $("#addMemberBtn").modal("hide");
+
+    // 페이지 새로고침
+    window.location.reload();
+  } catch (err) {
+    console.log(err);
+  }
 });
 
-$(document).on("click", ".commentBtn.delteBtn", async (event) => { // 댓글 삭제
+
+$(document).on("click", ".commentBtn.delteBtn", async (event) => {
   event.preventDefault();
-  console.log(event.currentTarget.nextElementSibling)
-  // const id = event.target.parentElement.parentElement.parentElement.getAttribute("data-comment-id");
-  // const ok = window.confirm("삭제");
-  // if (ok) {
-  //   try {
-  //     await deleteDoc(doc(db, "comments", id));
-  //     alert("삭제완료");
-  //     window.location.reload();
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
-});
 
-$("nav #navbar").on("click", "#memberNavBtn", async (element) => { // 네비게이션 이름 클릭
-    $("nav .nav-item").removeClass("_on");
-    $(element.target).closest(".nav-item").addClass("_on");
-    const dataMemberId = element.currentTarget.getAttribute("data-member-id"); 
-    // 클릭한 사람의 멤버 문서 ID 데이터를 가져옴 - 요소에 data-member-id
-    const selectUserData = await navSelectMember(dataMemberId); 
-    // navSelectmember함수에 클릭한 사람의 이름을 전달 , return값은 데이터 베이스의 members 안에 저장된 유저 데이터
-    memberCardInsert(selectUserData, dataMemberId); 
-    // 리턴 받은 유저 데이터와, 가져온 사람의 memberId를 parameter로 전달
+  // 댓글의 id를 가져옵니다.
+  const id = event.target.parentElement.parentElement.parentElement.getAttribute("data-comment-id");
 
-});
+  // 삭제 비밀번호를 입력 받습니다.
+  const pw = prompt("삭제 비밀번호를 입력해주세요.");
 
-$("#memberCard").on("click", "#commentForm button", async () => { // 댓글 추가 / 댓글 등록 버튼 클릭
-    const dataMemberId = $('#card').data('member-id');
-    // 
-    const data = {
-      memberId: dataMemberId, // 멤버 필드 아이디
-      commentName: $("#commentName").val(),
-      commentText: $("#commentText").val(),
-      date: new Date().getTime(),
-    };
-
-    if(data.commentName <= 0 || data.commentText <= 0){
-      return alert('내용을 입력해주세요.')
-    }
+  if (pw) {
     try {
+      // 해당 id를 가진 댓글의 정보를 가져옵니다.
+      const result = await getDoc(doc(db, "comments", id));
+      const { password } = result.data();
+
+      if (password === pw) {
+        // 비밀번호가 일치하면 댓글을 삭제합니다.
+        await deleteDoc(doc(db, "comments", id));
+        alert("삭제완료");
+        window.location.reload(); // 페이지를 새로고침합니다.
+      } else {
+        alert('삭제 비밀번호가 일치하지 않습니다.');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  } else if(pw !== null) { // 확인을 누를 시 비밀번호가 없을 경우
+    alert('비밀번호를 입력해주세요.');
+  }
+});
+
+
+$("nav #navbar").on("click", "#memberNavBtn", async (element) => {
+  // 네비게이션에서 이름을 클릭했을 때 실행되는 부분
+
+  // 모든 nav-item에서 _on 클래스를 제거합니다.
+  $("nav .nav-item").removeClass("_on");
+
+  // 클릭한 요소의 부모 요소 중 가장 가까운 .nav-item에 _on 클래스를 추가합니다.
+  $(element.target).closest(".nav-item").addClass("_on");
+
+  // 클릭한 요소의 data-member-id 속성 값을 가져옵니다.
+  const dataMemberId = element.currentTarget.getAttribute("data-member-id");
+
+  // 클릭한 멤버의 정보를 데이터베이스에서 가져옵니다.
+  const selectUserData = await navSelectMember(dataMemberId);
+
+  // 가져온 멤버 정보와 data-member-id를 파라미터로 사용하여 회원 카드를 삽입합니다.
+  memberCardInsert(selectUserData, dataMemberId);
+});
+
+
+$("#memberCard").on("click", "#commentForm button", async () => {
+  // 댓글 추가 / 댓글 등록 버튼 클릭 시 실행
+
+  const dataMemberId = $('#card').data('member-id'); // 카드에 저장된 멤버 아이디 가져오기
+
+  // 삭제 비밀번호를 입력 받습니다.
+  let pw = prompt('삭제 비밀번호를 입력해주세요.');
+
+  const data = {
+    memberId: dataMemberId, // 멤버 필드 아이디
+    commentName: $("#commentName").val(), // 댓글 닉네임 input value
+    commentText: $("#commentText").val(), // 댓글 내용 input value
+    date: new Date().getTime(), // 현재 시간 밀리세컨드
+    password: pw // 삭제 비밀번호
+  };
+
+  if (data.commentName.length <= 0 || data.commentText.length <= 0) {
+    return alert('내용을 입력해주세요.');
+  } // 이름 또는 댓글 내용이 아무것도 없을 때 경고창
+
+  if (pw.length >= 4) { // 비밀번호가 4자리 이상일 때 실행
+    try {
+      // Firestore에 댓글 추가
       await addDoc(collection(db, "comments"), data);
 
+      // 해당 멤버의 댓글을 다시 가져와 화면에 출력
       await getComment(dataMemberId);
-    } catch (err) {
-      console.log("댓글 추가 에러", err);
-    }finally{
-      $("#commentName").val('')
-      $("#commentText").val('')
-    }
-  });
-
-  $("#memberCard").on("click", ".good #goodBtn", async () => {
-    // 좋아요 클릭
-    const dataMemberId = $('#card').data('member-id');
-    const goodSwitch = window.localStorage.getItem('goodBtn');
-    
-    if(goodSwitch) return alert('이미 좋아요를 누르셨습니다.');
-
-    try {
-      const memberData = await getDoc(doc(db, "members", dataMemberId));
-      const { good } = memberData.data();
-
-      await updateDoc(doc(db, "members", dataMemberId), {
-        good: good + 1,
-      });
-
-      const goodPlus = good + 1;
-      $("#goodBtn").html(`👍${goodPlus}`);
-
-      window.localStorage.setItem('goodBtn',true);
-    } catch (err) {
-      console.log(err);
     } finally {
-      navItemInit();
+      // 입력 필드 초기화
+      $("#commentName").val('');
+      $("#commentText").val('');
     }
-  });
+  } else {
+    alert('비밀번호를 4자리 이상 입력해주세요.');
+  }
+});
+
+
+$("#memberCard").on("click", ".good #goodBtn", async () => {
+  // 좋아요 버튼 클릭 시 실행
+
+  // 카드에 저장된 멤버 아이디 가져오기
+  const dataMemberId = $('#card').data('member-id');
+  
+  // 좋아요 버튼의 상태를 localStorage에서 가져옵니다.
+  const goodSwitch = window.localStorage.getItem('goodBtn');
+
+  // 이미 좋아요를 눌렀을 경우 알림을 띄우고 종료합니다.
+  if (goodSwitch) return alert('이미 좋아요를 누르셨습니다.');
+
+  try {
+    // 해당 멤버의 데이터를 가져옵니다.
+    const memberData = await getDoc(doc(db, "members", dataMemberId));
+    const { good } = memberData.data();
+
+    // 좋아요 수를 1 증가시키고 업데이트합니다.
+    await updateDoc(doc(db, "members", dataMemberId), {
+      good: good + 1,
+    });
+
+    const goodPlus = good + 1;
+    // 좋아요 버튼의 텍스트를 업데이트합니다.
+    $("#goodBtn").html(`👍${goodPlus}`);
+
+    // localStorage에 좋아요 버튼 상태를 저장합니다.
+    window.localStorage.setItem('goodBtn', true);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+
 
   $(document).on("click", ".commentHideBtn", function () {
     $("#commentField").toggle();
