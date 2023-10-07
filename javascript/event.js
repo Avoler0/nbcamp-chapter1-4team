@@ -56,7 +56,7 @@ $("#addMemberBtn").click(async function () {
 });
 
 
-$(document).on("click", ".commentBtn.delteBtn", async (event) => {
+$(document).on("click", ".commentBtn.delteBtn", async (event) => { // 댓글 삭제
   event.preventDefault();
 
   // 댓글의 id를 가져옵니다.

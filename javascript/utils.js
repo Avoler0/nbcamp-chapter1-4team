@@ -1,5 +1,8 @@
 
 
+export const weekday = ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
+
+
 export const timeFormat = (time) => {
   // 입력된 시간을 JavaScript Date 객체로 변환
   const timeDate = new Date(time);
@@ -17,33 +20,18 @@ export const timeFormat = (time) => {
 }
 
 
-export const visitSetStorage = () => {
-  // 방문 정보 객체 생성
-  const obj = {
-    value: true,
-    expire: Date.now() + 3600000 // 1시간 설정
-  }
 
-  // 로컬 스토리지에 방문 정보 저장 (JSON 형식으로 변환)
-  window.localStorage.setItem('visit', JSON.stringify(obj));
-}
+
+export const visitSetStorage = () => window.localStorage.setItem('visit', timeFormat(new Date()).split(" ",3).join(' '))
 
 
 export const visitGetStorage = () => {
   // 로컬 스토리지에서 'visit' 값을 가져옴
   const visitLocal = window.localStorage.getItem('visit');
-
   // 'visit' 값이 없으면 false 반환
   if (!visitLocal) return false;
+  // 현재 시간과 저장된 시간이 같다면 true 반환 아니면 false 반환
+  if (visitLocal === timeFormat(new Date()).split(" ",3).join(' ')) return false;
 
-  // JSON 문자열을 객체로 변환
-  const obj = JSON.parse(visitLocal);
-
-  // 현재 시간이 만료 시간을 지났으면 로컬 스토리지에서 'visit' 제거하고 false 반환
-  if (Date.now() > obj.expire) {
-    window.localStorage.removeItem('visit');
-    return false;
-  } else {
-    return true; // 그렇지 않으면 true 반환
-  }
+  return true;
 }

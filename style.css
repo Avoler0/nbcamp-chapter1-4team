@@ -264,6 +264,18 @@ nav li span {
   margin-right: 0;
 }
 
+#visit{
+  background-color: white;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  z-index: 1000;
+  margin: 30px;
+  padding: 10px;
+  border: 1px solid #d7d7d7;
+}
+
 @media (max-width: 500px) {
   .crac {
     display: flex;
