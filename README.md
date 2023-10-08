@@ -5,4 +5,4 @@
 `JQuery` `Firebase` `Bootstrap` `ChartJS`
 
 ## 배포 페이지
-<a href="https://nbcamp-chapter1-4team.netlify.app">https://nbcamp-chapter1-4team.netlify.app</a>
+<a href="https://nbcamp-chapter1-4team.netlify.app" target="_blank">https://nbcamp-chapter1-4team.netlify.app</a>
