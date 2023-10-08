@@ -265,6 +265,8 @@ nav li span {
 }
 
 #visit{
+  width: 322px;
+  height: 196px;
   background-color: white;
   position: absolute;
   top: 0;
@@ -275,6 +277,7 @@ nav li span {
   padding: 10px;
   border: 1px solid #d7d7d7;
 }
+
 
 @media (max-width: 500px) {
   .crac {

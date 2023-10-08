@@ -48,29 +48,23 @@ const todaySetVisitData = async () => {
   });
 }
 
-// 매 3초마다 방문자 수 업데이트
-const todayUpdateVisit = async () => {
-  timer = setTimeout(async () => {
-    try {
-      let visitCount = await todayVisit();
-      await updateDoc(doc(db, "visitants", now), {
-        visit: visitCount + 1,
-      });
-      clearTimeout(timer)
-    } catch (err) {
-      todayUpdateVisit()
-    }
-  }, 3000)
-}
-
-// 자정에 방문자 수 초기화
-if (new Date().getHours() === 0) {
-  todaySetVisitData();
+// 방문자 수 업데이트
+export const todayUpdateVisit = async () => {
+  const result = await getDoc(doc(db,"visitants", now))
+  if(!result.data()) todaySetVisitData();
+  visitSetStorage();
+  try {
+    let visitCount = await todayVisit();
+    await updateDoc(doc(db, "visitants", now), {
+      visit: visitCount + 1,
+    });
+    clearTimeout(timer)
+  } catch (err) {
+    todayUpdateVisit()
+  }
 }
 
 // 방문 여부 체크 후 방문 기록 저장
-if (visitGetStorage()) {
+if (visitGetStorage() !== now) {
   todayUpdateVisit();
-} else {
-  visitSetStorage();
 }

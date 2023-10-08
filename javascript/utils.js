@@ -28,10 +28,7 @@ export const visitSetStorage = () => window.localStorage.setItem('visit', timeFo
 export const visitGetStorage = () => {
   // 로컬 스토리지에서 'visit' 값을 가져옴
   const visitLocal = window.localStorage.getItem('visit');
-  // 'visit' 값이 없으면 false 반환
-  if (!visitLocal) return false;
-  // 현재 시간과 저장된 시간이 같다면 true 반환 아니면 false 반환
-  if (visitLocal === timeFormat(new Date()).split(" ",3).join(' ')) return false;
 
-  return true;
+
+  return visitLocal;
 }
