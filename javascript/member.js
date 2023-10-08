@@ -27,6 +27,15 @@ export const navItemInit = async () => {
     name: '',
     good: 0
   };
+  // 가장 좋아요가 많은 멤버 업데이트
+  docs.forEach((doc)=>{
+    const data = doc.data();
+    if (data.good > goodKingMember.good) {
+      goodKingMember.id = doc.id;
+      goodKingMember.name = data.name;
+      goodKingMember.good = data.good;
+    }
+  })
 
   // 각 멤버 정보 처리
   docs.forEach((doc) => {
@@ -36,13 +45,6 @@ export const navItemInit = async () => {
     if (firstMember === "") {
       firstMember = data;
       firstId = doc.id;
-    }
-
-    // 가장 좋아요가 많은 멤버 업데이트
-    if (data.good > goodKingMember.good) {
-      goodKingMember.id = doc.id;
-      goodKingMember.name = data.name;
-      goodKingMember.good = data.good;
     }
 
     // 네비게이션 바에 멤버 추가
