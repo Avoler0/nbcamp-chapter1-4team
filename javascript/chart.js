@@ -58,7 +58,6 @@ try {
             ticks: {
               // y축 tick 수정
               callback: function(value, index, ticks) {
-                console.log(value, index, ticks)
                 return Number.isInteger(value) ? index % 2 === 0 ? value + '명' : '' : '';
               }
             }
@@ -74,5 +73,5 @@ try {
     new Chart(ctx, config);
   }, 1000);
 } catch (err) {
-  console.log('그래프 에러', err);
+  console.log(err);
 }
