@@ -19,7 +19,7 @@ try {
     // 현재 요일을 배열의 4번째로 이동
     weekday.forEach((day, index) => {
       let newIndex = (index + (3 - today) + 7) % 7; // 새로운 인덱스 계산
-      dataArr[newIndex] = result[index]; // 새로운 인덱스에 해당하는 방문자 수 대입
+      dataArr[newIndex] = result.data[index]; // 새로운 인덱스에 해당하는 방문자 수 대입
     });
 
     weekday.forEach((day, index) => {
@@ -55,10 +55,12 @@ try {
         },
         scales: {
           y: {
+            suggestedMin:0,
+            suggestedMax:result.maxVisit + 5,
             ticks: {
               // y축 tick 수정
               callback: function(value, index, ticks) {
-                return Number.isInteger(value) ? index % 2 === 0 ? value + '명' : '' : '';
+                return Number.isInteger(value) ? index % 2 === 0 ? value+2 + '명' : '' : '';
               }
             }
           }

@@ -9,26 +9,35 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 import { timeFormat, visitGetStorage, visitSetStorage } from './utils.js';
 
+// 현재 시간 포맷팅
+let timer; // 타이머 변수
+let maxVisit = 0;
+const now = timeFormat(new Date()).split(" ", 3).join(' '); // 현재 시간을 포맷팅하여 변수에 저장
 // 방문자 데이터 가져오기
 export const getVisitData = async () => {
   let docs = await getDocs(collection(db, 'visitants'));
   let dataArr = new Array(7).fill(0);
 
   docs.forEach((doc) => {
-    const year = doc.id.split('년')[0]
-    const month = doc.id.split('년')[1].split('월')[0]
-    const date = doc.id.split('년')[1].split('월')[1].split('일')[0]
-
     const { visit } = doc.data();
-    dataArr[new Date(`${year}.${month}.${date}`).getDay()] = visit;
+    const docDay = new Date(doc.id.replace(/\s/g,'.').replace(/년|월|일/g,'')).getDay();
+    const nowDay = new Date(now.replace(/\s/g,'.').replace(/년|월|일/g,'')).getDay();
+    
+    if(visit >= maxVisit) maxVisit = visit;
+    
+    if(docDay > nowDay){
+      return;
+    }else{
+      
+      dataArr[docDay] = visit;
+    }
   })
 
-  return dataArr;
+
+  return {data:dataArr, maxVisit:maxVisit};
 }
 
-// 현재 시간 포맷팅
-let timer; // 타이머 변수
-const now = timeFormat(new Date()).split(" ", 3).join(' '); // 현재 시간을 포맷팅하여 변수에 저장
+
 
 // 오늘의 방문자 수 가져오기
 export const todayVisit = async () => {
